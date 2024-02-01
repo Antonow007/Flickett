@@ -20,5 +20,16 @@ namespace Flickett
         {
             InitializeComponent();
         }
+       
+        private void ForgotPassword_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Take action for forgoten passwords");
+        }
+
+        private void SignUp_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Open the Registration Form");
+        }
+
     }
 }
