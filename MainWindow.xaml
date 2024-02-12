@@ -8,15 +8,15 @@
         Title="MainWindow" Height="500" Width="850">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="381*"/>
+            <ColumnDefinition Width="469*"/>
         </Grid.ColumnDefinitions>
 
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="81*"/>
-                <RowDefinition Height="67*"/>
-                <RowDefinition Height="64"/>
+                <RowDefinition Height="100*"/>
+                <RowDefinition Height="69*"/>
+                <RowDefinition Height="42.97"/>
                 <RowDefinition Height="74"/>
                 <RowDefinition Height="Auto" MinHeight="36"/>
                 <RowDefinition Height="84"/>
