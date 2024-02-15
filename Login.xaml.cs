@@ -23,5 +23,19 @@ namespace Flickett
         {
             InitializeComponent();
         }
+
+
+        private void ForgotPasswordClick(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Do Forgot password thing");
+        }
+
+
+        private void SignUp_Click(object sender, RoutedEventArgs e) 
+        {
+            MessageBox.Show("Open Sign Up Page");
+        }
+
+       
     }
 }
