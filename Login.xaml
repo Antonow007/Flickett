@@ -7,11 +7,13 @@
         mc:Ignorable="d"
         Title="Login" Height="500" Width="800">
 
-    <Grid>
+
+    <Grid Background="#FF333333" RenderTransformOrigin="0.463,0.587">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="381*"/>
             <ColumnDefinition Width="469*"/>
         </Grid.ColumnDefinitions>
+
 
         <Grid>
             <Grid.RowDefinitions>
@@ -27,13 +29,13 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="Lorem Ipsum" FontSize="30" Margin="0,17,0,0" Height="39" VerticalAlignment="Top" Grid.Row="1" HorizontalAlignment="Center" Width="173"/>
+            <TextBlock Text="Lorem Ipsum" FontSize="30" Margin="0,17,0,0" Height="39" VerticalAlignment="Top" Grid.Row="1" HorizontalAlignment="Center" Width="173" Foreground="White"/>
             <TextBox Grid.Row="2" BorderThickness="0,0,0,2" Width="300" 
                  FontSize="25" HorizontalAlignment="Center"
-                 VerticalContentAlignment="Center" BorderBrush="Black" Name="UsernameTextBox" Margin="0,30,0,1"/>
+                 VerticalContentAlignment="Center" BorderBrush="White" Name="UsernameTextBox" Margin="0,10,0,1" Foreground="White" Background="#FF333333"/>
             <TextBox Grid.Row="3" BorderThickness="0,0,0,2" Width="300" 
                  FontSize="25" HorizontalAlignment="Center"
-                 VerticalContentAlignment="Center" BorderBrush="Black" Name="PasswordTextBox" Margin="0,30,0,17"/>
+                 VerticalContentAlignment="Center" BorderBrush="White" Name="PasswordTextBox" Margin="0,37,0,36" Grid.RowSpan="2" Background="#FF333333" Foreground="White"/>
 
             <Grid Grid.Row="4" Margin="0,14,0,4">
 
@@ -42,9 +44,9 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <CheckBox Content="Rember me" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Right" Width="150" Margin="0,3,0,0"/>
-                <TextBlock Grid.Column="1" Margin="50,0,0,-1" HorizontalAlignment="Left" Width="112">
-              <Hyperlink Click="ForgotPasswordClick" Foreground="Black" TextDecorations="None">Forgot Password ?</Hyperlink>
+                <CheckBox Content="Rember me" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Right" Width="150" Margin="0,3,0,0" Foreground="White"/>
+                <TextBlock Grid.Column="1" Margin="50,0,0,-1" HorizontalAlignment="Left" Width="112" Foreground="White">
+              <Hyperlink Click="ForgotPasswordClick" Foreground="White"  TextDecorations="None">Forgot Password ?</Hyperlink>
                 </TextBlock>
 
             </Grid>
@@ -52,14 +54,15 @@
             <Button Grid.Row="5" VerticalAlignment="Top" HorizontalAlignment="Center" Height="40" Width="200" Content="Login" 
                 FontSize="25" Margin="0,20,0,0"/>
 
-            <TextBlock Grid.Row="5" Height="16" VerticalAlignment="Top" HorizontalAlignment="Center" Width="167" Margin="0,64,0,0">
+            <TextBlock Grid.Row="5" Height="16" VerticalAlignment="Top" HorizontalAlignment="Center" Width="167" Margin="0,64,0,0" Foreground="White">
              <Run Text="Don't have an account?"/>
-             <Hyperlink Click="SignUp_Click" Foreground="Black" TextDecorations="None">
+             <Hyperlink Click="SignUp_Click" Foreground="White" TextDecorations="None">
              <Run Text="Sign up"/>
              </Hyperlink>
             </TextBlock>
 
         </Grid>
+        <Image Grid.Column="1" Source="/Resources/Images/Redsquare.png" Width="150" Height="150" Stretch="Uniform" HorizontalAlignment="Center"/>
 
     </Grid>
 
