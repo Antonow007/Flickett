@@ -36,6 +36,9 @@ namespace Flickett
             MessageBox.Show("Open Sign Up Page");
         }
 
-       
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
