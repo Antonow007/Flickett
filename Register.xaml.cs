@@ -23,12 +23,18 @@ namespace Flickett
         public Register()
         {
             InitializeComponent();
+            UsenameTextBox.txtInput.TextChanged += UsernameTextBox_TextChanged;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             FlNames.txtInput.BorderBrush = System.Windows.Media.Brushes.Red;
             UsernameErrorBox.Text = "This Username has aleready taken";
+        }
+
+        private void UsernameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+           
         }
     }
 }

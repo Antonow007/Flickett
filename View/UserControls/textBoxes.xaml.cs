@@ -20,10 +20,13 @@ namespace Flickett.View.UserControls
     /// </summary>
     public partial class textBoxes : UserControl
     {
+     
+
         public textBoxes()
         {
             InitializeComponent();
         }
+
 
 
         private string placeholder;
