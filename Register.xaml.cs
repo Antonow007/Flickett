@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Flickett.View.UserControls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,12 @@ namespace Flickett
         public Register()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            FlNames.txtInput.BorderBrush = System.Windows.Media.Brushes.Red;
+            UsernameErrorBox.Text = "This Username has aleready taken";
         }
     }
 }
