@@ -7,6 +7,29 @@
         xmlns:userControls="clr-namespace:Flickett.View.UserControls"
         mc:Ignorable="d"
         Title="Register" Height="500" Width="800">
+
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="CaretBrush" Value="Red" />
+            <Style.Triggers>
+                <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                    <Setter Property="CaretBrush" Value="Blue" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="textBoxesStyles" TargetType="{x:Type userControls:textBoxes}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type userControls:textBoxes}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    
     <Grid Background="#FF333333">
 
         <Grid.ColumnDefinitions>
@@ -32,7 +55,7 @@
 
         <TextBlock Text="Register" Foreground="White" FontSize="26" TextAlignment="Center"/>
 
-        <userControls:textBoxes x:Name="FlNames" Grid.Row="1" Placeholder="First and Last Name" BorderBrush="Red"/>
+        <userControls:textBoxes Style="{DynamicResource textBoxesStyles}" x:Name="FlNames" Grid.Row="1" Placeholder="First and Last Name" BorderBrush="Red"/>
 
         <TextBlock Grid.Row="2" Height="15" Width="auto" Text="" Foreground="Red" FontSize="12" VerticalAlignment="Center" 
                    HorizontalAlignment="Left" Name="FLNameErrorBox"/>

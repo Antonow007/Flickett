@@ -31,7 +31,7 @@ namespace Flickett
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             FlNames.txtInput.BorderBrush = System.Windows.Media.Brushes.Red;
-            UsernameErrorBox.Text = "This Username has aleready taken";
+            UsernameErrorBox.Text = "This Username has already taken";
         }
 
 
@@ -41,8 +41,7 @@ namespace Flickett
         private void UsernameTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
-            if (UsenameTextBox.txtInput.Text.Length >= 3)
-            {
+            
 
                 string username = UsenameTextBox.txtInput.Text;
                 try
@@ -60,8 +59,6 @@ namespace Flickett
 
                             if (result == null)
                             {
-
-
                                 UsernameErrorBox.Text = "";
                                 UsenameTextBox.txtInput.BorderBrush= System.Windows.Media.Brushes.White;
                                 check = true;
@@ -80,7 +77,7 @@ namespace Flickett
                 {
                     MessageBox.Show("Username already exists !");
                 }
-            }
+            
 
 
 

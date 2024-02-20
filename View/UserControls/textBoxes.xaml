@@ -6,7 +6,18 @@
              xmlns:local="clr-namespace:Flickett.View.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="30" d:DesignWidth="300">
+
+
+
     <UserControl.Resources>
+
+        <Style x:Key="CustomTextBoxStyle" TargetType="{x:Type TextBox}">
+            
+            <Setter Property="CaretBrush" Value="White"/>
+            
+        </Style>
+
+
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
                 <Setter.Value>
@@ -36,6 +47,9 @@
             <Setter Property="Padding" Value="1"/>
             <Setter Property="Template">
                 <Setter.Value>
+
+
+
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
                             <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
@@ -83,8 +97,8 @@
                             <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
                         </Border>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                            <Trigger Property="IsEnabled" Value="True">
+                                <Setter Property="Opacity" TargetName="border" Value="0"/>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="true">
                                 <Setter Property="BorderBrush" TargetName="border" Value="White"/>
@@ -107,15 +121,17 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
+    
+    
     <Grid Background="#333333">
-        
-        <TextBox Style="{DynamicResource TextBoxStyle1}" Name="txtInput"  VerticalContentAlignment="Center" FontSize="16"
+
+        <TextBox Style="{StaticResource CustomTextBoxStyle}" Name="txtInput"  VerticalContentAlignment="Center" FontSize="16"
                  FontWeight="Light" Background="Transparent" BorderThickness="0,0,0,1" Foreground="White"
                  TextChanged="txtInput_TextChanged"/>
-        
+
         <TextBlock x:Name="tbPlaceholder" FontSize="16" FontWeight="Light" Text="{Binding Placeholder}"
                    Foreground="DarkGray" VerticalAlignment="Center" Margin="5,0,0,0" Panel.ZIndex="-1"/>
-        
+
         <Button Style="{DynamicResource TextBoxButtonStyle}" x:Name="btnClear" Width="30" HorizontalAlignment="Right" Content="X"
                 Background="Transparent" Foreground="LightGray" BorderThickness="0" Click="btnClear_Click" />
 
