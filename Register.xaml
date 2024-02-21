@@ -65,7 +65,7 @@
         <TextBlock Grid.Row="4" Height="15" Width="auto" Text="" Foreground="Red" FontSize="12" VerticalAlignment="Center" 
                    HorizontalAlignment="Left" Name="UsernameErrorBox"/>
 
-        <userControls:textBoxes  x:Name="PasswordTextBox" Grid.Row="5" Placeholder="Password"/>
+        <userControls:textBoxes  x:Name="PasswordTextBox" Grid.Row="5" Placeholder="Password" />
 
         <TextBlock Grid.Row="6" Height="15" Width="auto" Text="" Foreground="Red" FontSize="12" VerticalAlignment="Center" 
                    HorizontalAlignment="Left" Name="PasswordErrorBox"/>

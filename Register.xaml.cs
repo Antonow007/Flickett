@@ -26,6 +26,13 @@ namespace Flickett
         {
             InitializeComponent();
             UsenameTextBox.txtInput.TextChanged += UsernameTextBox_TextChanged;
+            PasswordTextBox.txtInput.TextChanged += PasswordTextBox_TextChanged;
+            RepeatPassTextBox.txtInput.TextChanged += RepeatPassTextBox_TextChanged;
+        }
+
+        private void TxtInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -66,7 +73,7 @@ namespace Flickett
                             else
                             {
                                 UsernameErrorBox.Text = "Username has already been taken";
-                                UsenameTextBox.txtInput.BorderBrush = System.Windows.Media.Brushes.Red;
+                               
                                 check = false;
                             }
 
@@ -79,11 +86,49 @@ namespace Flickett
                 }
             
 
+        }
+
+
+        private void PasswordTextBox_TextChanged( object sender, TextChangedEventArgs e) 
+        {
+
+            if (PasswordTextBox.txtInput.Text.Length < 6)
+            {
+                PasswordErrorBox.Text = "Password must be at least 6 characters";
+                
+                check = true;
+            }
+            else
+            {
+                PasswordErrorBox.Text = "";
+
+                check = false;
+
+
+            }
+        }
+
+        private void RepeatPassTextBox_TextChanged(object sender, TextChangedEventArgs e) 
+        {
+
+            if (RepeatPassTextBox.txtInput.Text != PasswordTextBox.txtInput.Text && RepeatPassTextBox.txtInput.Text.Length > 0)
+            {
+                RepeatPassErrorBox.Text = "Passwords not match!";
+                check = false;
+            }
+            else
+            {
+                RepeatPassErrorBox.Text = "";
+                check = true;
+            }
+
 
 
 
 
 
         }
+
+
     }
 }
