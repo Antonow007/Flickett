@@ -89,7 +89,7 @@
            HorizontalAlignment="Left" Name="PhoneErrorBox"/>
 
 
-        <Button Grid.Column="1" Grid.Row="12" Content="Click" Click="Button_Click" Height="40" Width="120"/>
+        <Button Grid.Column="1" Grid.Row="12" Content="Click" Height="40" Width="120"/>
 
     </Grid>
 </Window>
