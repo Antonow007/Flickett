@@ -31,6 +31,7 @@ namespace Flickett
             RepeatPassTextBox.txtInput.TextChanged += RepeatPassTextBox_TextChanged;
             EmailTextBox.txtInput.TextChanged += EmailTextBox_TextChanged;
             PhoneTextBox.txtInput.TextChanged += PhoneTextBox_TextChanged;
+            
         }
 
         private void TxtInput_TextChanged(object sender, TextChangedEventArgs e)
@@ -185,5 +186,10 @@ namespace Flickett
         }
 
 
+       
+
+
+        
+       
     }
 }

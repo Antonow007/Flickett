@@ -89,6 +89,9 @@
            HorizontalAlignment="Left" Name="PhoneErrorBox"/>
 
 
+        <PasswordBox Grid.Row="13" Background="Transparent" Name="PassBox" VerticalContentAlignment="Center"></PasswordBox>
+        <TextBlock Name="PasswordPlaceholder" Grid.Row="13" FontSize="16" FontWeight="Light" Foreground="DarkGray" VerticalAlignment="Center" Margin="5,0,0,0" Panel.ZIndex="-1" Text="Password"/>
+
         <Button Grid.Column="1" Grid.Row="12" Content="Click" Height="40" Width="120"/>
 
     </Grid>
