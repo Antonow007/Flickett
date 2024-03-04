@@ -16,6 +16,7 @@ namespace Flickett
             UsenameTextBox.txtInput.TextChanged += UsernameTextBox_TextChanged;
             EmailTextBox.txtInput.TextChanged += EmailTextBox_TextChanged;
             PhoneTextBox.txtInput.TextChanged += PhoneTextBox_TextChanged;
+            FlNames.txtInput.TextChanged += FlNames_TextChanged;
 
         }
 
@@ -189,6 +190,36 @@ namespace Flickett
                 RepeatPassErrorBox.Text = "";
                 check = true;
             }
+        }
+
+        private void FlNames_TextChanged(object sender, RoutedEventArgs e)
+        {
+            if (FlNames.txtInput.Text.Length > 0)
+            {
+
+                string[] names = FlNames.txtInput.Text.Split(' ');
+
+                if (names.Length >= 2)
+                {
+                    FLNameErrorBox.Text = "";
+                    check = true;
+                }
+                else
+                {
+                    FLNameErrorBox.Text = "Please enter both first and last names.";
+                    check = false;
+                }
+
+            }
+            else
+            {
+                FLNameErrorBox.Text = "";
+            }
+        }
+
+        private void PassbtnClear_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

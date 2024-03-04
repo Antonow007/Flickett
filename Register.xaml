@@ -71,11 +71,14 @@
         <TextBlock Grid.Row="4" Height="15" Width="auto" Text="" Foreground="Red" FontSize="12" VerticalAlignment="Center" 
                    HorizontalAlignment="Left" Name="UsernameErrorBox"/>
 
-        <!--PasswordBox with placeholder (Not user control) and error label-->
+        <!--PasswordBox with placeholder (Not user control) and error label and clear button-->
         
         <PasswordBox Grid.Row="5" Background="Transparent" Name="PassBox" VerticalContentAlignment="Center" Foreground="White" PasswordChanged="PassBox_PasswordChanged" BorderThickness="0,0,0,1"></PasswordBox>
         <TextBlock Name="PasswordPlaceholder" Grid.Row="5" FontSize="16" FontWeight="Light" Foreground="DarkGray" VerticalAlignment="Center" Margin="5,0,0,0" Panel.ZIndex="-1" Text="Password"/>
-
+        
+        <Button Grid.Row="5" Name="PassbtnClear" Width="30" HorizontalAlignment="Right" Content="X"
+         Background="Transparent" Foreground="LightGray" BorderThickness="0" Click="PassbtnClear_Click" />
+        
         <TextBlock Grid.Row="6" Height="15" Width="auto" Text="" Foreground="Red" FontSize="12" VerticalAlignment="Center" 
                    HorizontalAlignment="Left" Name="PasswordErrorBox"/>
 
@@ -96,7 +99,7 @@
 
         <userControls:textBoxes  x:Name="PhoneTextBox" Grid.Row="11" Placeholder="Phone"/>
 
-        <TextBlock Grid.Row="12" Height="15" Width="auto" Text="" Foreground="Red" FontSize="12" VerticalAlignment="Center" 
+        <TextBlock Grid.Row="12" Height="15" Width="auto" Text="" Foreground="Red" FontSize="12" VerticalAlignment="Center" Margin="0,0,0,26"
            HorizontalAlignment="Left" Name="PhoneErrorBox"/>
 
         <!---->
