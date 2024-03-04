@@ -29,7 +29,7 @@
             </Setter>
         </Style>
     </Window.Resources>
-    
+
     <Grid Background="#FF333333">
 
         <Grid.ColumnDefinitions>
@@ -53,44 +53,53 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
+        <!--Register Sign-->
+        
         <TextBlock Text="Register" Foreground="White" FontSize="26" TextAlignment="Center"/>
 
+        <!--First and Last name Text boxes (User Control)-->
+        
         <userControls:textBoxes Style="{DynamicResource textBoxesStyles}" x:Name="FlNames" Grid.Row="1" Placeholder="First and Last Name" BorderBrush="Red"/>
 
         <TextBlock Grid.Row="2" Height="15" Width="auto" Text="" Foreground="Red" FontSize="12" VerticalAlignment="Center" 
                    HorizontalAlignment="Left" Name="FLNameErrorBox"/>
-
-        <userControls:textBoxes x:Name="UsenameTextBox" Grid.Row="3" Placeholder="Username"/>
         
+        <!--Username Text box (User Control) and error label-->
+        
+        <userControls:textBoxes x:Name="UsenameTextBox" Grid.Row="3" Placeholder="Username"/>
+
         <TextBlock Grid.Row="4" Height="15" Width="auto" Text="" Foreground="Red" FontSize="12" VerticalAlignment="Center" 
                    HorizontalAlignment="Left" Name="UsernameErrorBox"/>
 
-        <userControls:textBoxes  x:Name="PasswordTextBox" Grid.Row="5" Placeholder="Password" />
+        <!--PasswordBox with placeholder (Not user control) and error label-->
+        
+        <PasswordBox Grid.Row="5" Background="Transparent" Name="PassBox" VerticalContentAlignment="Center" Foreground="White" PasswordChanged="PassBox_PasswordChanged" BorderThickness="0,0,0,1"></PasswordBox>
+        <TextBlock Name="PasswordPlaceholder" Grid.Row="5" FontSize="16" FontWeight="Light" Foreground="DarkGray" VerticalAlignment="Center" Margin="5,0,0,0" Panel.ZIndex="-1" Text="Password"/>
 
         <TextBlock Grid.Row="6" Height="15" Width="auto" Text="" Foreground="Red" FontSize="12" VerticalAlignment="Center" 
                    HorizontalAlignment="Left" Name="PasswordErrorBox"/>
 
-
-        <userControls:textBoxes x:Name="RepeatPassTextBox"  Grid.Row="7" Placeholder="Repeat Password"/>
+        <!--RepeatPasswordBox with placeholder (Not user control) and error label-->
+        <PasswordBox Grid.Row="7" PasswordChanged="PasswordBox_PasswordChanged" Background="Transparent" Name="RepeatPassBox" VerticalContentAlignment="Center" Foreground="White" BorderThickness="0,0,0,1"></PasswordBox>
+        <TextBlock Name="RepeatPassPlaceholder" Grid.Row="7" FontSize="16" FontWeight="Light" Foreground="DarkGray" VerticalAlignment="Center" Margin="5,0,0,0" Panel.ZIndex="-1" Text="Repeat Password"/>
 
         <TextBlock Grid.Row="8" Height="15" Width="auto" Text="" Foreground="Red" FontSize="12" VerticalAlignment="Center" 
                    HorizontalAlignment="Left" Name="RepeatPassErrorBox"/>
-
+        
+        <!--EmailTextBox (User Control) with error label-->
 
         <userControls:textBoxes  x:Name="EmailTextBox" Grid.Row="9" Placeholder="Email"/>
-        
-         <TextBlock Grid.Row="10" Height="15" Width="auto" Text="" Foreground="Red" FontSize="12" VerticalAlignment="Center" 
+        <TextBlock Grid.Row="10" Height="15" Width="auto" Text="" Foreground="Red" FontSize="12" VerticalAlignment="Center" 
                     HorizontalAlignment="Left" Name="EmailErrorBox"/>
-
         
+        <!--PhoneTextBox (UserControl) with error label-->
+
         <userControls:textBoxes  x:Name="PhoneTextBox" Grid.Row="11" Placeholder="Phone"/>
 
         <TextBlock Grid.Row="12" Height="15" Width="auto" Text="" Foreground="Red" FontSize="12" VerticalAlignment="Center" 
            HorizontalAlignment="Left" Name="PhoneErrorBox"/>
 
-
-        <PasswordBox Grid.Row="13" Background="Transparent" Name="PassBox" VerticalContentAlignment="Center"></PasswordBox>
-        <TextBlock Name="PasswordPlaceholder" Grid.Row="13" FontSize="16" FontWeight="Light" Foreground="DarkGray" VerticalAlignment="Center" Margin="5,0,0,0" Panel.ZIndex="-1" Text="Password"/>
+        <!---->
 
         <Button Grid.Column="1" Grid.Row="12" Content="Click" Height="40" Width="120"/>
 

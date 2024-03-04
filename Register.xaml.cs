@@ -1,20 +1,7 @@
-﻿using Flickett.View.UserControls;
-using MySql.Data.MySqlClient;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MySql.Data.MySqlClient;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Text.RegularExpressions;
 
 namespace Flickett
 {
@@ -27,11 +14,9 @@ namespace Flickett
         {
             InitializeComponent();
             UsenameTextBox.txtInput.TextChanged += UsernameTextBox_TextChanged;
-            PasswordTextBox.txtInput.TextChanged += PasswordTextBox_TextChanged;
-            RepeatPassTextBox.txtInput.TextChanged += RepeatPassTextBox_TextChanged;
             EmailTextBox.txtInput.TextChanged += EmailTextBox_TextChanged;
             PhoneTextBox.txtInput.TextChanged += PhoneTextBox_TextChanged;
-            
+
         }
 
         private void TxtInput_TextChanged(object sender, TextChangedEventArgs e)
@@ -88,39 +73,7 @@ namespace Flickett
         }
 
 
-        private void PasswordTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
 
-            if (PasswordTextBox.txtInput.Text.Length < 6 && PasswordTextBox.txtInput.Text.Length != 0)
-            {
-                PasswordErrorBox.Text = "Password must be at least 6 characters";
-
-                check = true;
-            }
-            else
-            {
-                PasswordErrorBox.Text = "";
-
-                check = false;
-
-
-            }
-        }
-
-        private void RepeatPassTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-            if (RepeatPassTextBox.txtInput.Text != PasswordTextBox.txtInput.Text && RepeatPassTextBox.txtInput.Text.Length > 0)
-            {
-                RepeatPassErrorBox.Text = "Passwords not match!";
-                check = false;
-            }
-            else
-            {
-                RepeatPassErrorBox.Text = "";
-                check = true;
-            }
-        }
 
 
         private void EmailTextBox_TextChanged(object sender, EventArgs e)
@@ -180,16 +133,62 @@ namespace Flickett
                 check = false;
             }
 
+        }
+
+        private void PassBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (PassBox.Password.Length > 0)
+            {
+                PasswordPlaceholder.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                PasswordPlaceholder.Visibility = Visibility.Visible;
+            }
+
+            if (PassBox.Password.Length < 6 && PassBox.Password.Length != 0)
+            {
+                PasswordErrorBox.Text = "Password must be at least 6 characters";
+
+                check = true;
+            }
+            else
+            {
+                PasswordErrorBox.Text = "";
+
+                check = false;
+
+
+            }
+
+
 
 
 
         }
 
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (RepeatPassBox.Password.Length > 0)
+            {
+                RepeatPassPlaceholder.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                RepeatPassPlaceholder.Visibility = Visibility.Visible;
+            }
 
-       
 
-
-        
-       
+            if (RepeatPassBox.Password != PassBox.Password && RepeatPassBox.Password.Length > 0)
+            {
+                RepeatPassErrorBox.Text = "Passwords not match!";
+                check = false;
+            }
+            else
+            {
+                RepeatPassErrorBox.Text = "";
+                check = true;
+            }
+        }
     }
 }
