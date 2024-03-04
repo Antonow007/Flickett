@@ -13,7 +13,7 @@ namespace Flickett
         public Register()
         {
             InitializeComponent();
-            UsenameTextBox.txtInput.TextChanged += UsernameTextBox_TextChanged;
+            UsernameTextBox.txtInput.TextChanged += UsernameTextBox_TextChanged;
             EmailTextBox.txtInput.TextChanged += EmailTextBox_TextChanged;
             PhoneTextBox.txtInput.TextChanged += PhoneTextBox_TextChanged;
             FlNames.txtInput.TextChanged += FlNames_TextChanged;
@@ -25,7 +25,13 @@ namespace Flickett
             throw new NotImplementedException();
         }
 
+        private void UpdateRegisterButtonState()
+        {
+            RegisterButton.IsEnabled = check;
+        }
 
+
+        string connstring = "server=localhost;uid=root;pwd=Antonow7;database=cinemadb;SslMode=None;";
 
         bool check = false;
 
@@ -35,11 +41,11 @@ namespace Flickett
 
 
 
-            string username = UsenameTextBox.txtInput.Text;
+            string username = UsernameTextBox.txtInput.Text;
             try
             {
 
-                string connstring = "server=localhost;uid=root;pwd=Antonow7;database=cinemadb;SslMode=None;";
+
                 using (MySqlConnection con = new MySqlConnection(connstring))
                 {
                     con.Open();
@@ -52,7 +58,7 @@ namespace Flickett
                         if (result == null)
                         {
                             UsernameErrorBox.Text = "";
-                            UsenameTextBox.txtInput.BorderBrush = System.Windows.Media.Brushes.White;
+                            UsernameTextBox.txtInput.BorderBrush = System.Windows.Media.Brushes.White;
                             check = true;
                         }
                         else
@@ -67,9 +73,10 @@ namespace Flickett
             }
             catch (MySqlException)
             {
-                MessageBox.Show("Username already exists !");
+                MessageBox.Show("Database error !");
             }
 
+            UpdateRegisterButtonState();
 
         }
 
@@ -104,7 +111,7 @@ namespace Flickett
             }
 
 
-
+            UpdateRegisterButtonState();
 
         }
 
@@ -134,10 +141,13 @@ namespace Flickett
                 check = false;
             }
 
+            UpdateRegisterButtonState();
         }
 
         private void PassBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
+
+
             if (PassBox.Password.Length > 0)
             {
                 PasswordPlaceholder.Visibility = Visibility.Collapsed;
@@ -159,11 +169,10 @@ namespace Flickett
 
                 check = false;
 
-
             }
 
 
-
+            UpdateRegisterButtonState();
 
 
         }
@@ -190,6 +199,8 @@ namespace Flickett
                 RepeatPassErrorBox.Text = "";
                 check = true;
             }
+
+            UpdateRegisterButtonState();
         }
 
         private void FlNames_TextChanged(object sender, RoutedEventArgs e)
@@ -214,11 +225,78 @@ namespace Flickett
             else
             {
                 FLNameErrorBox.Text = "";
+                check = false;
             }
+
+
+            UpdateRegisterButtonState();
         }
 
         private void PassbtnClear_Click(object sender, RoutedEventArgs e)
         {
+            PassBox.Clear();
+            PassBox.Focus();
+        }
+
+        private void RepeatPassbtnClear_Click(object sender, RoutedEventArgs e)
+        {
+            RepeatPassBox.Clear();
+            RepeatPassBox.Focus();
+        }
+
+        private void RegisterButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!check) 
+            {
+                MessageBox.Show("User registration failed: please check all fields !");
+                return;
+            }
+
+            string[] names = FlNames.txtInput.Text.Split(' ');
+
+            string firstName = names[0];
+            string lastName = names.Length > 1 ? names[1] : "";
+            string username = UsernameTextBox.txtInput.Text;
+            string password = PassBox.Password;
+            string email = EmailTextBox.txtInput.Text;
+            string phone = PhoneTextBox.txtInput.Text;
+
+            try
+            {
+                string hashPassword = Login.HashPassword(password);
+
+                using (MySqlConnection con = new MySqlConnection(connstring))
+                {
+                    con.Open();
+                    string sql = "INSERT INTO Users (username,passwod,first_name,last_name,email,phone) VALUES (@Username,@Passwod,@First_Name,@Last_Name,@Email,@Phone)";
+                    using (MySqlCommand cmd = new MySqlCommand(sql, con))
+                    {
+                        cmd.Parameters.AddWithValue("@Username", username);
+                        cmd.Parameters.AddWithValue("@Passwod", hashPassword);
+                        cmd.Parameters.AddWithValue("@First_Name", firstName);
+                        cmd.Parameters.AddWithValue("@Last_Name", lastName);
+                        cmd.Parameters.AddWithValue("@Email", email);
+                        cmd.Parameters.AddWithValue("@Phone", phone);
+                        int rowsAffected = cmd.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            Login login = new Login();
+                            login.Show();
+                            this.Hide();
+                        }
+                        else
+                        {
+                            MessageBox.Show("User registration failed.");
+                        }
+                    }
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+
 
         }
     }
