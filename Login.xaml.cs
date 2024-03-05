@@ -33,12 +33,12 @@ namespace Flickett
         }
 
 
-        private void SignUp_Click(object sender, RoutedEventArgs e) 
+        private void SignUp_Click(object sender, RoutedEventArgs e)
         {
             Register reg = new Register();
             reg.Show();
             this.Close();
-        } 
+        }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -77,7 +77,7 @@ namespace Flickett
                             if (passwordMatches)
                             {
                                 MessageBox.Show($"Login successful: Welcome {username}!");
-                               
+
 
 
                             }
@@ -101,6 +101,7 @@ namespace Flickett
         public static string HashPassword(string password)
         {
 
+
             byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
 
 
@@ -112,6 +113,8 @@ namespace Flickett
 
                 return hashedPassword.Length > 50 ? hashedPassword.Substring(0, 50) : hashedPassword;
             }
+
+
 
 
         }

@@ -1,15 +1,24 @@
 ﻿using MySql.Data.MySqlClient;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace Flickett
 {
-    /// <summary>
-    /// Interaction logic for Register.xaml
-    /// </summary>
     public partial class Register : Window
     {
+
+        bool isUsernameValid = false;
+        bool isEmailValid = false;
+        bool isPhoneValid = false;
+        bool isPasswordValid = false;
+        bool isRepeatPasswordValid = false;
+        bool isFlNamesValid = false;
+
+
+       private readonly string connstring = "server=localhost;uid=root;pwd=Antonow7;database=cinemadb;SslMode=None;";
+
         public Register()
         {
             InitializeComponent();
@@ -20,31 +29,37 @@ namespace Flickett
 
         }
 
-        private void TxtInput_TextChanged(object sender, TextChangedEventArgs e)
+
+        private void FlNames_TextChanged(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (FlNames.txtInput.Text.Length > 0)
+            {
+                string[] names = FlNames.txtInput.Text.Split(' ');
+
+                if (names.Length >= 2)
+                {
+                    FLNameErrorBox.Text = "";
+                    isFlNamesValid = true;
+                }
+                else
+                {
+                    FLNameErrorBox.Text = "Please enter both first and last names.";
+                    isFlNamesValid = false;
+                }
+
+            }
+
+            UpdateRegisterButtonState();
         }
-
-        private void UpdateRegisterButtonState()
-        {
-            RegisterButton.IsEnabled = check;
-        }
-
-
-        string connstring = "server=localhost;uid=root;pwd=Antonow7;database=cinemadb;SslMode=None;";
-
-        bool check = false;
 
 
         private void UsernameTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
-
-
             string username = UsernameTextBox.txtInput.Text;
+
             try
             {
-
 
                 using (MySqlConnection con = new MySqlConnection(connstring))
                 {
@@ -59,13 +74,13 @@ namespace Flickett
                         {
                             UsernameErrorBox.Text = "";
                             UsernameTextBox.txtInput.BorderBrush = System.Windows.Media.Brushes.White;
-                            check = true;
+                            isUsernameValid = true;
                         }
                         else
                         {
                             UsernameErrorBox.Text = "Username has already been taken";
 
-                            check = false;
+                            isUsernameValid = false;
                         }
 
                     }
@@ -77,51 +92,83 @@ namespace Flickett
             }
 
             UpdateRegisterButtonState();
-
         }
 
+        private void PassBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
 
+            if (PassBox.Password.Length > 0)
+            {
+                PasswordPlaceholder.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                PasswordPlaceholder.Visibility = Visibility.Visible;
+            }
+            if (PassBox.Password.Length < 6 && PassBox.Password.Length != 0)
+            {
+                PasswordErrorBox.Text = "Password must be at least 6 characters";
+                isPasswordValid = false;
+            }
+            else
+            {
+                PasswordErrorBox.Text = "";
+                isPasswordValid = true;
+            }
 
+            UpdateRegisterButtonState();
+        }
 
+        private void RepeatPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (RepeatPassBox.Password.Length > 0)
+            {
+                RepeatPassPlaceholder.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                RepeatPassPlaceholder.Visibility = Visibility.Visible;
+            }
+
+            if (RepeatPassBox.Password != PassBox.Password)
+            {
+                RepeatPassErrorBox.Text = "Passwords not match!";
+                isRepeatPasswordValid = false;
+            }
+            else
+            {
+                RepeatPassErrorBox.Text = "";
+                isRepeatPasswordValid = true;
+            }
+
+            UpdateRegisterButtonState();
+        }
 
         private void EmailTextBox_TextChanged(object sender, EventArgs e)
         {
 
-
-
             string email = EmailTextBox.txtInput.Text.Trim();
-
             string pattern = @"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$";
-
-            if (string.IsNullOrWhiteSpace(email))
-            {
-                EmailErrorBox.Text = "";
-                return;
-            }
 
             if (Regex.IsMatch(email, pattern))
             {
                 EmailErrorBox.Text = "";
-                check = true;
+                isEmailValid = true;
             }
             else
             {
                 EmailErrorBox.Text = "Invalid email address!";
-                check = false;
+                isEmailValid = false;
             }
-
 
             UpdateRegisterButtonState();
 
         }
 
-
         private void PhoneTextBox_TextChanged(Object sender, EventArgs e)
         {
 
-
             string phoneNumber = PhoneTextBox.txtInput.Text.Trim();
-
             string pattern = @"^(\+359|0)8[7-9][0-9]{7}$";
 
             if (string.IsNullOrWhiteSpace(phoneNumber))
@@ -133,104 +180,18 @@ namespace Flickett
             if (Regex.IsMatch(phoneNumber, pattern))
             {
                 PhoneErrorBox.Text = "";
-                check = true;
+                isPhoneValid = true;
             }
             else
             {
                 PhoneErrorBox.Text = "Invalid phone number!";
-                check = false;
+                isPhoneValid = false;
             }
 
             UpdateRegisterButtonState();
         }
 
-        private void PassBox_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-
-
-            if (PassBox.Password.Length > 0)
-            {
-                PasswordPlaceholder.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                PasswordPlaceholder.Visibility = Visibility.Visible;
-            }
-
-            if (PassBox.Password.Length < 6 && PassBox.Password.Length != 0)
-            {
-                PasswordErrorBox.Text = "Password must be at least 6 characters";
-
-                check = true;
-            }
-            else
-            {
-                PasswordErrorBox.Text = "";
-
-                check = false;
-
-            }
-
-
-            UpdateRegisterButtonState();
-
-
-        }
-
-        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            if (RepeatPassBox.Password.Length > 0)
-            {
-                RepeatPassPlaceholder.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                RepeatPassPlaceholder.Visibility = Visibility.Visible;
-            }
-
-
-            if (RepeatPassBox.Password != PassBox.Password && RepeatPassBox.Password.Length > 0)
-            {
-                RepeatPassErrorBox.Text = "Passwords not match!";
-                check = false;
-            }
-            else
-            {
-                RepeatPassErrorBox.Text = "";
-                check = true;
-            }
-
-            UpdateRegisterButtonState();
-        }
-
-        private void FlNames_TextChanged(object sender, RoutedEventArgs e)
-        {
-            if (FlNames.txtInput.Text.Length > 0)
-            {
-
-                string[] names = FlNames.txtInput.Text.Split(' ');
-
-                if (names.Length >= 2)
-                {
-                    FLNameErrorBox.Text = "";
-                    check = true;
-                }
-                else
-                {
-                    FLNameErrorBox.Text = "Please enter both first and last names.";
-                    check = false;
-                }
-
-            }
-            else
-            {
-                FLNameErrorBox.Text = "";
-                check = false;
-            }
-
-
-            UpdateRegisterButtonState();
-        }
+       
 
         private void PassbtnClear_Click(object sender, RoutedEventArgs e)
         {
@@ -244,11 +205,16 @@ namespace Flickett
             RepeatPassBox.Focus();
         }
 
+        private void UpdateRegisterButtonState()
+        {
+            RegisterButton.IsEnabled = isUsernameValid && isEmailValid && isPhoneValid && isPasswordValid && isRepeatPasswordValid && isFlNamesValid;
+        }
+
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!check) 
+            if (!IsValidRegistration() || !AllFieldsFilled())
             {
-                MessageBox.Show("User registration failed: please check all fields !");
+                MessageBox.Show("User registration failed:please check all fields !");
                 return;
             }
 
@@ -297,7 +263,34 @@ namespace Flickett
                 MessageBox.Show("Error: " + ex.Message);
             }
 
-
         }
+
+
+
+        private bool AllFieldsFilled()
+        {
+
+            return !string.IsNullOrWhiteSpace(FlNames.txtInput.Text) &&
+                   !string.IsNullOrWhiteSpace(UsernameTextBox.txtInput.Text) &&
+                   !string.IsNullOrWhiteSpace(PassBox.Password) &&
+                   !string.IsNullOrWhiteSpace(RepeatPassBox.Password) &&
+                   !string.IsNullOrWhiteSpace(EmailTextBox.txtInput.Text) &&
+                   !string.IsNullOrWhiteSpace(PhoneTextBox.txtInput.Text);
+        }
+
+
+        private bool IsValidRegistration()
+        {
+            return isUsernameValid && 
+                isEmailValid && 
+                isPhoneValid && 
+                isPasswordValid &&
+                isRepeatPasswordValid &&
+                isFlNamesValid;
+        }
+
+
+
+
     }
 }
