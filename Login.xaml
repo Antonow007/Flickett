@@ -139,7 +139,7 @@
             <Grid Grid.Column="1" VerticalAlignment="Top" Height="30" HorizontalAlignment="Right" Width="230" Margin="0,5,5,0" >
                 <!--Close Button-->
                 <Button Width="26" Margin="200,0,6,0" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Name="CloseButton" Click="CloseButton_Click">
-                    <Image Source="Resources\Images\bigger red button.png"/>
+                    <Image Source="C:\Users\anton\source\repos\Flickett\Resources\Images\bigger red button.png"/>
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border Background="{TemplateBinding Background}">
@@ -163,7 +163,7 @@
                 </Button>
                 <!--Maximize Button-->
                 <Button Width="26" Margin="170,0,32,0" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Name="MaximizeButton" Click="MaximizeButton_Click">
-                    <Image Source="Resources\Images\bigger yellow button.png"/>
+                    <Image Source="C:\Users\anton\source\repos\Flickett\Resources\Images\bigger yellow button.png"/>
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border Background="{TemplateBinding Background}">
@@ -187,7 +187,7 @@
                 </Button>
                 <!--Minimite Button-->
                 <Button Width="26" Margin="125,0,44,0" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Name="MinimizeButton" Click="MinimizeButton_Click">
-                    <Image Source="Resources\Images\bigger green button.png"/>
+                    <Image Source="C:\Users\anton\source\repos\Flickett\Resources\Images\bigger green button.png"/>
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border Background="{TemplateBinding Background}">
