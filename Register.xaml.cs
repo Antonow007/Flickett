@@ -289,8 +289,26 @@ namespace Flickett
                 isFlNamesValid;
         }
 
+        private void registerCloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
 
+        private void registerMaximizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Normal)
+            {
+                this.WindowState = WindowState.Maximized;
+            }
+            else
+            {
+                this.WindowState = WindowState.Normal;
+            }
+        }
 
-
+        private void registerMinimizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
     }
 }
