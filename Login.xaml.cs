@@ -16,9 +16,6 @@ using System.Security.Cryptography;
 
 namespace Flickett
 {
-    /// <summary>
-    /// Interaction logic for Login.xaml
-    /// </summary>
     public partial class Login : Window
     {
         public Login()
@@ -44,7 +41,7 @@ namespace Flickett
         {
 
             string username = UsernameTextBox.Text;
-            string password = PasswordTextBox.Text;
+            string password = PasswordBox.Password;
 
             try
             {
@@ -125,19 +122,63 @@ namespace Flickett
             return string.Equals(userInputHashed, hashedPassword, StringComparison.OrdinalIgnoreCase);
         }
 
+        private void UsernameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (UsernameTextBox.Text.Length > 0)
+            {
+                loginUsernamePlaceholder.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                loginUsernamePlaceholder.Visibility = Visibility.Visible;
+            }
+        }
 
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (PasswordBox.Password.Length > 0)
+            {
+                loginPasswordPlaceholder.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                loginPasswordPlaceholder.Visibility = Visibility.Visible;
+            }
+        }
 
+        private void loginPasswordClear_Click(object sender, RoutedEventArgs e)
+        {
+           
+            PasswordBox.Clear();
+            PasswordBox.Focus();
+        }
 
+        private void loginUsernameClear_Click(object sender, RoutedEventArgs e)
+        {
+            UsernameTextBox.Clear();
+            UsernameTextBox.Focus();
+        }
 
+        private void MinimizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
 
+        private void MaximizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Normal)
+            {
+                this.WindowState = WindowState.Maximized;
+            }
+            else
+            {
+                this.WindowState = WindowState.Normal;
+            }
+        }
 
-
-
-
-
-
-
-
-
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

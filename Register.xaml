@@ -183,7 +183,7 @@
 
         <!--PasswordBox with placeholder (Not user control) and error label and clear button-->
 
-        <PasswordBox Grid.Row="5" Background="Transparent" Name="PassBox" VerticalContentAlignment="Center" Foreground="White" PasswordChanged="PassBox_PasswordChanged" BorderThickness="0,0,0,1"></PasswordBox>
+        <PasswordBox Grid.Row="5" CaretBrush="White" Background="Transparent" Name="PassBox" VerticalContentAlignment="Center" Foreground="White" PasswordChanged="PassBox_PasswordChanged" BorderThickness="0,0,0,1"></PasswordBox>
         <TextBlock Name="PasswordPlaceholder" Grid.Row="5" FontSize="16" FontWeight="Light" Foreground="DarkGray" VerticalAlignment="Center" Margin="5,0,0,0" Panel.ZIndex="-1" Text="Password"/>
 
         <Button Style="{DynamicResource ButtonStyle1}" Grid.Row="5" Name="PassbtnClear" Width="30" HorizontalAlignment="Right" Content="X"
@@ -193,7 +193,7 @@
                    HorizontalAlignment="Left" Name="PasswordErrorBox"/>
 
         <!--RepeatPasswordBox with placeholder (Not user control) and error label-->
-        <PasswordBox Grid.Row="7" PasswordChanged="RepeatPasswordBox_PasswordChanged" Background="Transparent" Name="RepeatPassBox" VerticalContentAlignment="Center" Foreground="White" BorderThickness="0,0,0,1"></PasswordBox>
+        <PasswordBox Grid.Row="7" CaretBrush="White" PasswordChanged="RepeatPasswordBox_PasswordChanged" Background="Transparent" Name="RepeatPassBox" VerticalContentAlignment="Center" Foreground="White" BorderThickness="0,0,0,1"></PasswordBox>
         <TextBlock  Name="RepeatPassPlaceholder" Grid.Row="7" FontSize="16" FontWeight="Light" Foreground="DarkGray" VerticalAlignment="Center" Margin="5,0,0,0" Panel.ZIndex="-1" Text="Repeat Password"/>
         <Button Style="{DynamicResource ButtonStyle2}" Grid.Row="7" Name="RepeatPassbtnClear" Width="30" HorizontalAlignment="Right" Content="X"
                       Background="Transparent" Foreground="LightGray" BorderThickness="0" Click="RepeatPassbtnClear_Click"/>
