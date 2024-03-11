@@ -45,43 +45,43 @@ namespace Flickett
 
             try
             {
-
-                string hashedPass = Login.HashPassword(password);
-
-
                 string connstring = "server=localhost;uid=root;pwd=Antonow7;database=cinemadb;SslMode=None;";
                 using (MySqlConnection con = new MySqlConnection(connstring))
                 {
                     con.Open();
-                    string sql = "SELECT username,passwod FROM Users WHERE username = @Username AND passwod=@Password";
-                    using (MySqlCommand cmd = new MySqlCommand(sql, con))
-                    {
-                        cmd.Parameters.AddWithValue("@Username", username);
-                        cmd.Parameters.AddWithValue("Password", hashedPass);
-                        object result = cmd.ExecuteScalar();
 
-                        if (result == null)
+                   
+                    string usernameQuery = "SELECT COUNT(*) FROM Users WHERE username = @Username";
+                    using (MySqlCommand usernameCmd = new MySqlCommand(usernameQuery, con))
+                    {
+                        usernameCmd.Parameters.AddWithValue("@Username", username);
+                        int usernameCount = Convert.ToInt32(usernameCmd.ExecuteScalar());
+
+                        if (usernameCount > 0)
                         {
-                            MessageBox.Show("User not found. Please register.");
+                            
+                            string passwordQuery = "SELECT COUNT(*) FROM Users WHERE username = @Username AND passwod = @Password";
+                            using (MySqlCommand passwordCmd = new MySqlCommand(passwordQuery, con))
+                            {
+                                passwordCmd.Parameters.AddWithValue("@Username", username);
+                                passwordCmd.Parameters.AddWithValue("@Password", HashPassword(password));
+                                int passwordCount = Convert.ToInt32(passwordCmd.ExecuteScalar());
+
+                                if (passwordCount > 0)
+                                {
+                                    MessageBox.Show($"Login successful: Welcome {username}!");
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Wrong password.");
+                                    PasswordBox.Clear();
+                                    PasswordBox.BorderBrush = Brushes.Red;
+                                }
+                            }
                         }
                         else
                         {
-                            string hashedPassword = HashPassword(password);
-
-                            bool passwordMatches = VerifyPassword(password, hashedPassword);
-
-
-                            if (passwordMatches)
-                            {
-                                MessageBox.Show($"Login successful: Welcome {username}!");
-
-
-
-                            }
-                            else
-                            {
-                                MessageBox.Show("Invalid username or password.");
-                            }
+                            MessageBox.Show("User not found. Please register.");
                         }
                     }
                 }
@@ -91,16 +91,14 @@ namespace Flickett
                 MessageBox.Show("Error: " + ex.Message);
             }
 
-        }
 
+        }
 
 
         public static string HashPassword(string password)
         {
 
-
             byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
-
 
             using (SHA256 sha256 = SHA256.Create())
             {
@@ -109,11 +107,8 @@ namespace Flickett
                 string hashedPassword = BitConverter.ToString(hashedBytes).Replace("-", String.Empty);
 
                 return hashedPassword.Length > 50 ? hashedPassword.Substring(0, 50) : hashedPassword;
+
             }
-
-
-
-
         }
 
         static bool VerifyPassword(string password, string hashedPassword)
@@ -147,8 +142,7 @@ namespace Flickett
         }
 
         private void loginPasswordClear_Click(object sender, RoutedEventArgs e)
-        {
-           
+        {          
             PasswordBox.Clear();
             PasswordBox.Focus();
         }
