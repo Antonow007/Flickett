@@ -10,7 +10,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="F logo.png" />
+    <None Remove="white arrow.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MySql.Data" Version="8.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="F logo.png" />
+    <Resource Include="white arrow.png" />
   </ItemGroup>
 
 </Project>
