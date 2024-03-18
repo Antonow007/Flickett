@@ -10,6 +10,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="bigger green button.png" />
+    <None Remove="bigger red button.png" />
+    <None Remove="bigger yellow button.png" />
     <None Remove="F logo.png" />
     <None Remove="white arrow.png" />
   </ItemGroup>
@@ -19,6 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="bigger green button.png" />
+    <Resource Include="bigger red button.png" />
+    <Resource Include="bigger yellow button.png" />
     <Resource Include="F logo.png" />
     <Resource Include="white arrow.png" />
   </ItemGroup>
