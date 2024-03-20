@@ -22,11 +22,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="bigger green button.png" />
-    <Resource Include="bigger red button.png" />
-    <Resource Include="bigger yellow button.png" />
-    <Resource Include="F logo.png" />
-    <Resource Include="white arrow.png" />
+    <Resource Include="Resources\Images\bigger green button.png" />
+    <Resource Include="Resources\Images\bigger red button.png" />
+    <Resource Include="Resources\Images\bigger yellow button.png" />
+    <Resource Include="Resources\Images\F logo.png" />
+    <Resource Include="Resources\Images\white arrow.png" />
   </ItemGroup>
 
 </Project>
