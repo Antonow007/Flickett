@@ -53,12 +53,12 @@ namespace Flickett
 
         private void SignUP_Click(object sender, RoutedEventArgs e)
         {
-            MoveSliderToLeft();
+            MoveSliderToLeft();               
         }
 
         private void SignInRegister_Click(object sender, RoutedEventArgs e)
         {
-            MoveSliderToRight();
+            MoveSliderToRight();         
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
