@@ -58,10 +58,12 @@
                                 <Setter Property="BorderBrush" TargetName="border" Value="Transparent"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
-                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                                <Setter Property="Background" TargetName="border" Value="Transparent"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="Transparent"/>
+                                <Setter TargetName="border" Property="Opacity" Value="0.5"/>
                                 <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
                             </Trigger>
+
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -253,6 +255,7 @@
                 </Path.Data>
             </Path>
             <Button Content="Sign Up" x:Name="LoginSignUpButton" HorizontalAlignment="Left" Height="21" Margin="160,398,0,0" VerticalAlignment="Top" Width="61" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" Click="SignUP_Click"/>
+            <TextBlock HorizontalAlignment="Left" x:Name="LoginPasswordErrorBox" Height="15" Margin="40,273,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="211" Foreground="#FFFF0505" FontSize="10" FontWeight="Bold"/>
         </Grid>
         <Grid x:Name="Sign_UP" HorizontalAlignment="Left" Height="480" Margin="450,0,0,0" VerticalAlignment="Center">
             <Button HorizontalAlignment="Left" Height="28" Margin="298,28,0,0" VerticalAlignment="Top" Width="42" BorderBrush="{x:Null}" RenderTransformOrigin="0.5,0.5" x:Name="RightSliderButton" Click="RightSliderButton_Click" Foreground="White" >
@@ -294,7 +297,7 @@
                 VerticalContentAlignment="Center" BorderBrush="White"  Margin="0,350,0,100" Foreground="White" Background="Transparent" SelectionBrush="{x:Null}" SelectionTextBrush="{x:Null}"/>
             <TextBlock x:Name="RegisterPhonePlaceholder" FontSize="16" FontWeight="Thin"  Foreground="White" VerticalAlignment="Top" 
                 Margin="0,350,50,0" Panel.ZIndex="-1" Text="Phone"/>
-            <Button HorizontalAlignment="Left" Height="24" Margin="118,420,0,0" VerticalAlignment="Top" Width="64" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" RenderTransformOrigin="0.168,0.4" x:Name="RegisterButton" Content="REGISTER"/>
+            <Button HorizontalAlignment="Left" Height="24" Margin="118,420,0,0" VerticalAlignment="Top" Width="64" Click="RegisterButton_Click" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" RenderTransformOrigin="0.168,0.4" x:Name="RegisterButton" Content="REGISTER"/>
             <Path HorizontalAlignment="Left" Height="15" Margin="112,413,0,0" Stroke="White" Stretch="Fill" VerticalAlignment="Top" Width="13">
                 <Path.Data>
                     <PathGeometry Figures="M140.3,360 L119.83334,360 119.83334,378.96667"/>
@@ -340,6 +343,11 @@
                 </Path.Data>
             </Path>
             <Button Content="Sign In" x:Name="RegisterSignInButton" HorizontalAlignment="Left" Height="21" Margin="120,459,0,0" VerticalAlignment="Top" Width="61" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" Click="SignInRegister_Click"/>
+            <TextBlock HorizontalAlignment="Left" Name="UsernameErrorBox" Height="15" Margin="0,185,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="211" Foreground="#FFFF0505" FontSize="12" FontFamily="Segoe UI" FontWeight="Bold"/>
+            <TextBlock HorizontalAlignment="Left" x:Name="PasswordErrorBox" Height="15" Margin="0,236,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="211" Foreground="#FFFF0505" FontSize="10" FontWeight="Bold" />
+            <TextBlock HorizontalAlignment="Left" x:Name="RepeatPasswordErrorBox" Height="15" Margin="0,284,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="211" Foreground="#FFFF0505" FontSize="10" FontWeight="Bold"/>
+            <TextBlock HorizontalAlignment="Left" x:Name="EmailErrorBox" Height="15" Margin="0,337,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="211" Foreground="#FFFF0505" FontSize="10" FontWeight="Bold"/>
+            <TextBlock HorizontalAlignment="Left" x:Name="PhoneErrorBox" Height="15" Margin="0,385,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="211" Foreground="#FFFF0505" FontSize="10" FontWeight="Bold"/>
         </Grid>
     </Grid>
 </Window>
