@@ -193,6 +193,13 @@
 
 
         <Grid x:Name="Sign_In" HorizontalAlignment="Left" Height="419" Margin="10,38,0,0" VerticalAlignment="Top" Width="340">
+
+            <Popup x:Name="popup" IsOpen="False" Placement="Bottom"  StaysOpen="False" AllowsTransparency="True">
+                <Border Background="#00FF00" BorderBrush="White" BorderThickness="1" CornerRadius="5">
+                    <TextBlock Text="Successful registration!" />
+                </Border>
+            </Popup>
+
             <Button HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="42" x:Name="LeftSliderButton" Click="LeftSliderButton_Click" BorderBrush="{x:Null}" Foreground="White" >
                 <Button.Background>
                     <ImageBrush ImageSource="Resources/Images/white arrow.png" Stretch="UniformToFill"/>

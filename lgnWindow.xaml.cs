@@ -15,17 +15,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
+using System.Windows.Threading;
 
 
 namespace Flickett
 {
-    /// <summary>
-    /// Interaction logic for lgnWindow.xaml
-    /// </summary>
-    /// 
+   
     public partial class lgnWindow : Window
     {
-
+        private DispatcherTimer timer;
         bool isUsernameValid = false;
         bool isEmailValid = false;
         bool isPhoneValid = false;
@@ -39,7 +37,26 @@ namespace Flickett
         public lgnWindow()
         {
             InitializeComponent();
+
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(15); 
+            timer.Tick += Timer_Tick;
         }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            
+            popup.IsOpen = false;
+            timer.Stop();
+        }
+
+        private void ShowPopupMessage()
+        {         
+            popup.IsOpen = true;          
+            timer.Start();
+        }
+       
+
 
         //Login Part
 
@@ -191,7 +208,6 @@ namespace Flickett
             {
                 RegisterUsernamePlaceholder.Visibility = Visibility.Hidden;
             }
-
 
             string username = RegisterUsernameBox.Text;
 
@@ -382,9 +398,6 @@ namespace Flickett
                 return;
             }
 
-
-
-
             string username = RegisterUsernameBox.Text;
             string password = RegisterPasswordBox.Password;
             string email = RegisterEmailBox.Text;
@@ -409,6 +422,7 @@ namespace Flickett
                         if (rowsAffected > 0)
                         {
                             MoveSliderToRight();
+                            ShowPopupMessage();
                         }
                         else
                         {
