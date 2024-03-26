@@ -1,26 +1,17 @@
 ﻿using MySql.Data.MySqlClient;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Security.Cryptography;
-using System.Text.RegularExpressions;
 using System.Windows.Threading;
 
 
 namespace Flickett
 {
-   
+
     public partial class lgnWindow : Window
     {
         private DispatcherTimer timer;
@@ -39,23 +30,25 @@ namespace Flickett
             InitializeComponent();
 
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(15); 
+            timer.Interval = TimeSpan.FromSeconds(15);
             timer.Tick += Timer_Tick;
         }
 
+
+
         private void Timer_Tick(object sender, EventArgs e)
         {
-            
+
             popup.IsOpen = false;
             timer.Stop();
         }
 
         private void ShowPopupMessage()
-        {         
-            popup.IsOpen = true;          
+        {
+            popup.IsOpen = true;
             timer.Start();
         }
-       
+
 
 
         //Login Part
@@ -170,7 +163,10 @@ namespace Flickett
 
                                 if (passwordCount > 0)
                                 {
-                                    MessageBox.Show($"Login successful: Welcome {username}!");
+                                   
+                                    MainPage mainPage = new MainPage();
+                                    mainPage.Show();
+                                    this.Close();
                                 }
                                 else
                                 {

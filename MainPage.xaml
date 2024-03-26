@@ -13,11 +13,35 @@
         Height="600" 
         Width="850">
 
-    <Grid>
+    <Grid Background="Black">
+        <Button HorizontalAlignment="Left" Panel.ZIndex="2" Height="20" x:Name="CloseButton"  Margin="819,10,0,0" VerticalAlignment="Top" Width="21" BorderBrush="{x:Null}" Foreground="{x:Null}">
+            <Button.Background>
+                <ImageBrush ImageSource="/Resources/Images/bigger red button.png" Stretch="UniformToFill"/>
+            </Button.Background>
+        </Button>
+        <Button HorizontalAlignment="Left" x:Name="MaximizeButton" Panel.ZIndex="2" Height="20" Margin="793,10,0,0" VerticalAlignment="Top" Width="21" BorderBrush="{x:Null}" Foreground="{x:Null}">
+            <Button.Background>
+                <ImageBrush ImageSource="/Resources/Images/bigger yellow button.png" Stretch="UniformToFill"/>
+            </Button.Background>
+        </Button>
+        <Button HorizontalAlignment="Left" Height="20" x:Name="MinimizeButton" Panel.ZIndex="2" Margin="767,10,0,0" VerticalAlignment="Top" Width="21" BorderBrush="{x:Null}" Foreground="{x:Null}">
+            <Button.Background>
+                <ImageBrush ImageSource="/Resources/Images/bigger green button.png" Stretch="UniformToFill"/>
+            </Button.Background>
+        </Button>
+        <Button Content="Button" HorizontalAlignment="Left" Height="39" Margin="10,36,0,0" VerticalAlignment="Top" Width="53" BorderBrush="{x:Null}" Foreground="{x:Null}">
+            <Button.Background>
+                <ImageBrush ImageSource="Resources/Images/hamburger button.png" Stretch="UniformToFill"/>
+            </Button.Background>
+        </Button>
+        <Ellipse HorizontalAlignment="Left" Height="70" Margin="63,20,0,0" VerticalAlignment="Top" Width="70" Fill="White">
+            <Ellipse.OpacityMask>
+                <ImageBrush ImageSource="/Resources/Images/F logo.png"/>
+            </Ellipse.OpacityMask>
+        </Ellipse>
 
 
-        <Border Background="#FF333333"
-                CornerRadius="20"/>
+
 
 
 
