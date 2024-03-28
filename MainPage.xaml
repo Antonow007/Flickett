@@ -14,6 +14,10 @@
         Width="850">
 
     <Grid Background="Black">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="61*"/>
+            <RowDefinition Height="89*"/>
+        </Grid.RowDefinitions>
         <Button HorizontalAlignment="Left" Panel.ZIndex="2" Height="20" x:Name="CloseButton"  Margin="819,10,0,0" VerticalAlignment="Top" Width="21" BorderBrush="{x:Null}" Foreground="{x:Null}">
             <Button.Background>
                 <ImageBrush ImageSource="/Resources/Images/bigger red button.png" Stretch="UniformToFill"/>
@@ -29,28 +33,49 @@
                 <ImageBrush ImageSource="/Resources/Images/bigger green button.png" Stretch="UniformToFill"/>
             </Button.Background>
         </Button>
-        <Button Content="Button" HorizontalAlignment="Left" Height="39" Margin="10,36,0,0" VerticalAlignment="Top" Width="53" BorderBrush="{x:Null}" Foreground="{x:Null}">
+        <Button Content="Button" HorizontalAlignment="Left" Height="45" Margin="28,42,0,0" VerticalAlignment="Top" Width="45" BorderBrush="{x:Null}" Foreground="{x:Null}" Name="hamburgerButton" Click="hamburgerButton_Click_1">
             <Button.Background>
                 <ImageBrush ImageSource="Resources/Images/hamburger button.png" Stretch="UniformToFill"/>
             </Button.Background>
         </Button>
-        <Ellipse HorizontalAlignment="Left" Height="70" Margin="63,20,0,0" VerticalAlignment="Top" Width="70" Fill="White">
+        <Ellipse HorizontalAlignment="Center" Height="90" Margin="0,20,0,0" VerticalAlignment="Top" Width="90" Fill="White">
             <Ellipse.OpacityMask>
                 <ImageBrush ImageSource="/Resources/Images/F logo.png"/>
             </Ellipse.OpacityMask>
         </Ellipse>
-        <Rectangle HorizontalAlignment="Left" Height="600" Stroke="Black" VerticalAlignment="Center" Width="200" Fill="White" Margin="-102,0,0,0" RadiusX="12.7" RadiusY="12.7"/>
-        <Button HorizontalAlignment="Left" Height="50" Margin="11,20,0,0" VerticalAlignment="Top" Width="50" BorderBrush="{x:Null}" Foreground="{x:Null}">
-            <Button.Background>
-                <ImageBrush Stretch="Uniform"/>
-            </Button.Background>
-        </Button>
-        <Button HorizontalAlignment="Left" Height="50" Margin="780,30,0,0" VerticalAlignment="Top" Width="50" BorderBrush="{x:Null}" Foreground="{x:Null}">
+        <Grid HorizontalAlignment="Left" Grid.RowSpan="2" VerticalAlignment="Top" Name="SlideMenu" Margin="-200,0,0,0">
+            <Rectangle HorizontalAlignment="Left" Height="600" Stroke="Black" VerticalAlignment="Center" Width="200" Fill="White"/>
+            <Rectangle HorizontalAlignment="Left" Height="80" Stroke="Black" VerticalAlignment="Top" Width="200"/>
+            <Button Content="Button" HorizontalAlignment="Left" Height="57" Margin="7,10,0,0" VerticalAlignment="Top" Width="57" Foreground="{x:Null}" BorderBrush="{x:Null}">
+                <Button.Background>
+                    <ImageBrush ImageSource="/Resources/Images/pp.png" Stretch="UniformToFill"/>
+                </Button.Background>
+            </Button>
+            <TextBlock HorizontalAlignment="Left" Height="19" Margin="69,36,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="89" x:Name="ProfileName" FontWeight="Bold" FontSize="14"/>
+            <Button HorizontalAlignment="Left" Height="26" Margin="166,32,0,0" VerticalAlignment="Top" Width="26" BorderBrush="{x:Null}">
+                <Button.Background>
+                    <ImageBrush ImageSource="/Resources/Images/log out.png"/>
+                </Button.Background>
+            </Button>
+
+
+
+
+
+
+
+
+
+
+
+
+        </Grid>
+        <Button HorizontalAlignment="Left" Height="30" Margin="784,50,0,0" VerticalAlignment="Top" Width="30" BorderBrush="{x:Null}" Foreground="{x:Null}">
             <Button.Background>
                 <ImageBrush ImageSource="Resources/Images/dots.png" Stretch="UniformToFill"/>
             </Button.Background>
         </Button>
-        <Button HorizontalAlignment="Left" Height="50" Margin="725,30,0,0" VerticalAlignment="Top" Width="50" Foreground="{x:Null}" BorderBrush="{x:Null}">
+        <Button HorizontalAlignment="Left" Height="30" Margin="715,50,0,0" VerticalAlignment="Top" Width="30" Foreground="{x:Null}" BorderBrush="{x:Null}">
             <Button.Background>
                 <ImageBrush ImageSource="Resources/Images/search.png" Stretch="UniformToFill"/>
             </Button.Background>

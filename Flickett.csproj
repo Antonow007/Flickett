@@ -18,6 +18,8 @@
     <None Remove="images.jpeg" />
     <None Remove="option button.png" />
     <None Remove="Resources\Images\dots.png" />
+    <None Remove="Resources\Images\log out.png" />
+    <None Remove="Resources\Images\pp.png" />
     <None Remove="Resources\Images\search.png" />
     <None Remove="white arrow.png" />
   </ItemGroup>
@@ -33,6 +35,8 @@
     <Resource Include="Resources\Images\bigger red button.png" />
     <Resource Include="Resources\Images\bigger yellow button.png" />
     <Resource Include="Resources\Images\F logo.png" />
+    <Resource Include="Resources\Images\log out.png" />
+    <Resource Include="Resources\Images\pp.png" />
     <Resource Include="Resources\Images\search.png" />
     <Resource Include="Resources\Images\white arrow.png" />
   </ItemGroup>

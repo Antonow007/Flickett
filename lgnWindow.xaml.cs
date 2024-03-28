@@ -165,8 +165,10 @@ namespace Flickett
                                 {
                                    
                                     MainPage mainPage = new MainPage();
+                                    mainPage.ProfileName.Text = username;
                                     mainPage.Show();
                                     this.Close();
+
                                     
                                 }
                                 else
