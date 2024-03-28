@@ -39,6 +39,22 @@
                 <ImageBrush ImageSource="/Resources/Images/F logo.png"/>
             </Ellipse.OpacityMask>
         </Ellipse>
+        <Rectangle HorizontalAlignment="Left" Height="600" Stroke="Black" VerticalAlignment="Center" Width="200" Fill="White" Margin="-102,0,0,0" RadiusX="12.7" RadiusY="12.7"/>
+        <Button HorizontalAlignment="Left" Height="50" Margin="11,20,0,0" VerticalAlignment="Top" Width="50" BorderBrush="{x:Null}" Foreground="{x:Null}">
+            <Button.Background>
+                <ImageBrush Stretch="Uniform"/>
+            </Button.Background>
+        </Button>
+        <Button HorizontalAlignment="Left" Height="50" Margin="780,30,0,0" VerticalAlignment="Top" Width="50" BorderBrush="{x:Null}" Foreground="{x:Null}">
+            <Button.Background>
+                <ImageBrush ImageSource="Resources/Images/dots.png" Stretch="UniformToFill"/>
+            </Button.Background>
+        </Button>
+        <Button HorizontalAlignment="Left" Height="50" Margin="725,30,0,0" VerticalAlignment="Top" Width="50" Foreground="{x:Null}" BorderBrush="{x:Null}">
+            <Button.Background>
+                <ImageBrush ImageSource="Resources/Images/search.png" Stretch="UniformToFill"/>
+            </Button.Background>
+        </Button>
 
 
 

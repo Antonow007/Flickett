@@ -15,10 +15,7 @@
     <None Remove="bigger yellow button.png" />
     <None Remove="F logo.png" />
     <None Remove="hamburger button.png" />
-    <None Remove="images.jpeg" />
     <None Remove="option button.png" />
-    <None Remove="Resources\Images\dots.png" />
-    <None Remove="Resources\Images\search.png" />
     <None Remove="white arrow.png" />
   </ItemGroup>
 
@@ -27,13 +24,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\Images\dots.png" />
     <Resource Include="Resources\Images\hamburger button.png" />
     <Resource Include="Resources\Images\bigger green button.png" />
     <Resource Include="Resources\Images\bigger red button.png" />
     <Resource Include="Resources\Images\bigger yellow button.png" />
     <Resource Include="Resources\Images\F logo.png" />
-    <Resource Include="Resources\Images\search.png" />
     <Resource Include="Resources\Images\white arrow.png" />
   </ItemGroup>
 
