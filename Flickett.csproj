@@ -17,6 +17,7 @@
     <None Remove="hamburger button.png" />
     <None Remove="images.jpeg" />
     <None Remove="option button.png" />
+    <None Remove="Resources\Images\adventure-movie-poster-template-design-7b13ea2ab6f64c1ec9e1bb473f345547_screen.jpg" />
     <None Remove="Resources\Images\dots.png" />
     <None Remove="Resources\Images\log out.png" />
     <None Remove="Resources\Images\pp.png" />
@@ -26,9 +27,11 @@
 
   <ItemGroup>
     <PackageReference Include="MySql.Data" Version="8.3.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\Images\adventure-movie-poster-template-design-7b13ea2ab6f64c1ec9e1bb473f345547_screen.jpg" />
     <Resource Include="Resources\Images\dots.png" />
     <Resource Include="Resources\Images\hamburger button.png" />
     <Resource Include="Resources\Images\bigger green button.png" />
