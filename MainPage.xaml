@@ -16,7 +16,7 @@
 
     <Window.Resources>
 
-        
+
         <Style TargetType="ScrollBar">
             <Setter Property="Background" Value="Black"/>
             <Setter Property="Foreground" Value="Gray"/>
@@ -70,13 +70,18 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Border BorderBrush="Gray" BorderThickness="1" Padding="5" Margin="0,0,10,10">
-                                    <Image Source="{Binding PosterUrl}" Width="150" Height="220"/>
-                                </Border>
+                                <Button Height="220" Width="150" Padding="5" Margin="0,0,10,10" Click="MoviePoster_Click" Background="Transparent" Tag="{Binding MovieId}">
+                                    <ContentPresenter>
+                                        <ContentPresenter.Content>
+                                            <Image Source="{Binding PosterUrl}" Width="150" Height="220"/>
+                                        </ContentPresenter.Content>
+                                    </ContentPresenter>
+                                </Button>
                                 <StackPanel Orientation="Vertical" Width="660">
                                     <TextBlock Text="{Binding Title}" FontWeight="Bold" Foreground="White" FontSize="22" Margin="0,0,0,8"/>
-                                    <TextBlock Text="{Binding Runtime, StringFormat='Runtime: {0} min'}" FontWeight="Bold" Foreground="White" Margin="0,0,0,10"/>
+                                    <TextBlock Text="{Binding Runtime, StringFormat='Duration : {0} min'}" FontWeight="Bold" Foreground="White" Margin="0,0,0,10"/>
                                     <TextBlock Text="{Binding Overview}" TextWrapping="Wrap" Foreground="White"/>
+                                    <Button Name="AddMovieButton" Height="30" Width="65" Content="Add Movie" Background="Black" Foreground="White" BorderBrush="Gray" HorizontalAlignment="Right" Margin="50,40,0,0" Click="AddMovieButton_Click"/>
                                 </StackPanel>
                             </StackPanel>
                         </DataTemplate>
@@ -118,7 +123,7 @@
 
 
 
-        <Grid HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="SlideMenu" Margin="0,0,0,0" Height="595" Width="0">
+        <Grid HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="SlideMenu" Margin="0,0,0,0" Height="600" Width="0">
             <Rectangle HorizontalAlignment="Left" Height="80" Stroke="Black" VerticalAlignment="Top" Width="200" Margin="-202,-2,0,0"/>
             <Rectangle HorizontalAlignment="Left" Height="600" Stroke="Black" VerticalAlignment="Center" Width="200" Fill="White" Margin="-202,0,0,0"/>
             <Button Content="Button" HorizontalAlignment="Left" Height="57" Margin="-195,8,0,0" VerticalAlignment="Top" Width="57" Foreground="{x:Null}" BorderBrush="{x:Null}">

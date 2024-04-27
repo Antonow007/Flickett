@@ -16,6 +16,8 @@ using System.Windows.Shapes;
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.IO;
+using MySql.Data.MySqlClient;
+using System.Data;
 
 namespace Flickett
 {
@@ -24,12 +26,23 @@ namespace Flickett
     {
 
         private const string ApiKey = "186d8bc2a505456d116a65559e5d0788";
+        private string userRole; // Field to store the user's role
 
-        public MainPage()
+        public MainPage(string role)
         {
             InitializeComponent();
             this.MouseDown += Window_MouseDown;
-            LoadMovies();
+            this.userRole = role; // Initialize the user's role
+
+            if (userRole=="admin")
+            {
+                LoadMovies();
+            }
+            else
+            {
+
+            }
+
             DataContext = this;
         }
 
@@ -55,6 +68,7 @@ namespace Flickett
 
                         foreach (dynamic movieData in data.results)
                         {
+                            string MovieID = movieData.movieID;
                             string title = movieData.title;
                             string overview = movieData.overview;
                             string posterUrl = $"https://image.tmdb.org/t/p/w500{movieData.poster_path}";
@@ -65,6 +79,7 @@ namespace Flickett
 
                             movies.Add(new MovieViewModel
                             {
+                                MovieId = MovieID,
                                 Title = title,
                                 Overview = overview,
                                 PosterUrl = posterUrl,
@@ -89,16 +104,70 @@ namespace Flickett
         }
     
 
-
         public class MovieViewModel
         {
+            public string MovieId { get; set; }
             public string Title { get; set; }
             public string Overview { get; set; }
             public int Runtime { get; set; }
             public string PosterUrl { get; set; }
         }
 
-      
+
+
+        private async Task AddMovieToDatabase(MovieViewModel movie)
+        {
+            string connectionString = "server=localhost;uid=root;pwd=Antonow7;database=cinemadb;SslMode=None;";
+
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string query = "INSERT INTO Movies (ApiMovieId, Title, Overview, Runtime, PosterUrl) VALUES (@ApiMovieId, @Title, @Overview, @Runtime, @PosterUrl)";
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@ApiMovieId", movie.MovieId);
+                    command.Parameters.AddWithValue("@Title", movie.Title);
+                    command.Parameters.AddWithValue("@Overview", movie.Overview);
+                    command.Parameters.AddWithValue("@Runtime", movie.Runtime);
+                    command.Parameters.AddWithValue("@PosterUrl", movie.PosterUrl);
+
+                    await command.ExecuteNonQueryAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error saving movie to database: {ex.Message}");
+            }
+        }
+
+        private async void AddMovieButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Get the clicked button
+            Button clickedButton = sender as Button;
+            if (clickedButton == null)
+                return;
+
+            // Get the MovieViewModel object corresponding to the clicked button
+            MovieViewModel movieToAdd = clickedButton.DataContext as MovieViewModel;
+            if (movieToAdd == null)
+                return;
+
+            try
+            {
+                // Call method to save the movie to the database
+                await AddMovieToDatabase(movieToAdd);
+
+                MessageBox.Show("Movie added successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error saving movie to database: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
         private void MoveSliderMenuToRight()
         {
             ThicknessAnimation animation = new ThicknessAnimation();
@@ -170,5 +239,17 @@ namespace Flickett
                 WindowState = WindowState.Normal;
             }
         }
+
+        private void MoviePoster_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            if (button != null && button.Tag != null)
+            {
+                var movieId = button.Tag; // Retrieve the movie ID from the Tag property
+                                          // Perform actions based on the clicked movie
+            }
+        }
+
+       
     }
 }

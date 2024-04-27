@@ -163,13 +163,20 @@ namespace Flickett
 
                                 if (passwordCount > 0)
                                 {
-                                   
-                                    MainPage mainPage = new MainPage();
-                                    mainPage.ProfileName.Text = username;
-                                    mainPage.Show();
-                                    this.Close();
 
-                                    
+                                    // Get user's role
+                                    string roleQuery = "SELECT Role FROM Users WHERE username = @Username";
+                                    using (MySqlCommand roleCmd = new MySqlCommand(roleQuery, con))
+                                    {
+                                        roleCmd.Parameters.AddWithValue("@Username", username);
+                                        string role = roleCmd.ExecuteScalar().ToString();
+
+                                        // Open main window and pass the username and role
+                                        MainPage mainPage = new MainPage(role);
+                                        mainPage.Show();
+                                        this.Close();
+                                    }
+                               
                                 }
                                 else
                                 {
