@@ -18,6 +18,7 @@ using Newtonsoft.Json;
 using System.IO;
 using MySql.Data.MySqlClient;
 using System.Data;
+using System.Diagnostics.Eventing.Reader;
 
 namespace Flickett
 {
@@ -26,25 +27,28 @@ namespace Flickett
     {
 
         private const string ApiKey = "186d8bc2a505456d116a65559e5d0788";
-        private string userRole; // Field to store the user's role
-
+        private string userRole;
+      
         public MainPage(string role)
         {
             InitializeComponent();
             this.MouseDown += Window_MouseDown;
-            this.userRole = role; // Initialize the user's role
-
-            if (userRole=="admin")
+            this.userRole = role;
+            if (userRole == "admin")
             {
                 LoadMovies();
             }
-            else
+            else if (userRole != "admin")
             {
+                LoadMoviesFromDb();
+                
 
             }
-
             DataContext = this;
+
         }
+
+
 
 
 
@@ -52,6 +56,7 @@ namespace Flickett
         {
             try
             {
+    
                 using (HttpClient client = new HttpClient())
                 {
                     client.BaseAddress = new Uri("https://api.themoviedb.org/3/");
@@ -68,22 +73,22 @@ namespace Flickett
 
                         foreach (dynamic movieData in data.results)
                         {
-                            string MovieID = movieData.movieID;
+                            string id = movieData.id;
                             string title = movieData.title;
                             string overview = movieData.overview;
                             string posterUrl = $"https://image.tmdb.org/t/p/w500{movieData.poster_path}";
-                            int? runtime = movieData.runtime; // Note the use of int? for nullable int
+                            int duration = await GetMovieDuration(client, id);
+                            string genre = await GetMovieGenre(client, id);
 
-                            // Check if runtime is null before assigning
-                            int actualRuntime = runtime ?? 0; // Default to 0 if runtime is null
 
                             movies.Add(new MovieViewModel
                             {
-                                MovieId = MovieID,
+                                MovieId = id,
                                 Title = title,
                                 Overview = overview,
                                 PosterUrl = posterUrl,
-                                Runtime = actualRuntime
+                                Duration = duration,
+                                Genre = genre
                             });
                         }
 
@@ -102,18 +107,54 @@ namespace Flickett
                 MessageBox.Show($"Error loading movies: {ex.Message}");
             }
         }
-    
+
+
+        private async Task<int> GetMovieDuration(HttpClient client, string movieId)
+        {
+            HttpResponseMessage response = await client.GetAsync($"movie/{movieId}?api_key={ApiKey}&language=en-US");
+            if (response.IsSuccessStatusCode)
+            {
+                string json = await response.Content.ReadAsStringAsync();
+                dynamic movieDetails = JsonConvert.DeserializeObject(json);
+                return movieDetails.runtime;
+            }
+            else
+            {
+                throw new Exception("Failed to fetch movie details.");
+            }
+        }
+
+        private async Task<string> GetMovieGenre(HttpClient client, string movieId)
+        {
+            HttpResponseMessage response = await client.GetAsync($"movie/{movieId}?api_key={ApiKey}&language=en-US");
+            if (response.IsSuccessStatusCode)
+            {
+                string json = await response.Content.ReadAsStringAsync();
+                dynamic movieDetails = JsonConvert.DeserializeObject(json);
+                string genre = ""; // Initialize genre as empty string
+                foreach (dynamic genreData in movieDetails.genres)
+                {
+                    genre += genreData.name + ", "; // Concatenate genre names
+                }
+                genre = genre.TrimEnd(',', ' '); // Remove trailing comma and space
+                return genre;
+            }
+            else
+            {
+                throw new Exception("Failed to fetch movie details.");
+            }
+        }
 
         public class MovieViewModel
         {
             public string MovieId { get; set; }
             public string Title { get; set; }
             public string Overview { get; set; }
-            public int Runtime { get; set; }
             public string PosterUrl { get; set; }
+            public string Genre { get; set; }
+            public int Duration { get; set; }
+            public string GenreWithDuration => $"{Duration}:min | {Genre}";
         }
-
-
 
         private async Task AddMovieToDatabase(MovieViewModel movie)
         {
@@ -125,17 +166,21 @@ namespace Flickett
                 {
                     await connection.OpenAsync();
 
-                    string query = "INSERT INTO Movies (ApiMovieId, Title, Overview, Runtime, PosterUrl) VALUES (@ApiMovieId, @Title, @Overview, @Runtime, @PosterUrl)";
+                    string query = "INSERT INTO Movies (ApiMovieId, Title, Overview, PosterUrl, Genre, Duration) VALUES (@ApiMovieId, @Title, @Overview, @PosterUrl, @Genre, @Duration)";
                     MySqlCommand command = new MySqlCommand(query, connection);
                     command.Parameters.AddWithValue("@ApiMovieId", movie.MovieId);
                     command.Parameters.AddWithValue("@Title", movie.Title);
                     command.Parameters.AddWithValue("@Overview", movie.Overview);
-                    command.Parameters.AddWithValue("@Runtime", movie.Runtime);
                     command.Parameters.AddWithValue("@PosterUrl", movie.PosterUrl);
+                    command.Parameters.AddWithValue("@Genre", movie.Genre);
+                    command.Parameters.AddWithValue("@Duration", movie.Duration);
+
+
 
                     await command.ExecuteNonQueryAsync();
                 }
             }
+
             catch (Exception ex)
             {
                 MessageBox.Show($"Error saving movie to database: {ex.Message}");
@@ -148,6 +193,9 @@ namespace Flickett
             Button clickedButton = sender as Button;
             if (clickedButton == null)
                 return;
+
+          
+
 
             // Get the MovieViewModel object corresponding to the clicked button
             MovieViewModel movieToAdd = clickedButton.DataContext as MovieViewModel;
@@ -166,6 +214,56 @@ namespace Flickett
                 MessageBox.Show($"Error saving movie to database: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void LoadMoviesFromDb()
+        {
+            try
+            {
+                string connectionString = "server=localhost;uid=root;pwd=Antonow7;database=cinemadb;SslMode=None;";
+                List<MovieViewModel> movies = new List<MovieViewModel>();
+
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string query = "SELECT * FROM Movies";
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    MySqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        string id = reader["ApiMovieId"].ToString();
+                        string title = reader["Title"].ToString();
+                        string overview = reader["Overview"].ToString();
+                        string posterUrl = reader["PosterUrl"].ToString();
+                        int duration = Convert.ToInt32(reader["Duration"]);
+                        string genre = reader["Genre"].ToString();
+
+                        movies.Add(new MovieViewModel
+                        {
+                            MovieId = id,
+                            Title = title,
+                            Overview = overview,
+                            PosterUrl = posterUrl,
+                            Duration = duration,
+                            Genre = genre
+                        });
+                    }
+
+                    reader.Close();
+                }
+
+                // Bind the movie data to the ItemsControl
+                MovieItemsControl.ItemsSource = movies;
+                MovieItemsControl.DataContext = this; // Set DataContext to the instance of MainPage
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading movies from database: {ex.Message}");
+            }
+        }
+
+
 
 
         private void MoveSliderMenuToRight()
@@ -208,14 +306,10 @@ namespace Flickett
             }
         }
 
-
         private bool IsMouseOverUIElement(UIElement element, Point mousePosition)
         {
             return element.InputHitTest(mousePosition) != null;
         }
-
-
-       
 
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)
         {
@@ -250,6 +344,6 @@ namespace Flickett
             }
         }
 
-       
+
     }
 }

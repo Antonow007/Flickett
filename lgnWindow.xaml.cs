@@ -20,7 +20,7 @@ namespace Flickett
         bool isPhoneValid = false;
         bool isPasswordValid = false;
         bool isRepeatPasswordValid = false;
-
+        
 
         private readonly string connstring = "server=localhost;uid=root;pwd=Antonow7;database=cinemadb;SslMode=None;";
 
@@ -32,6 +32,7 @@ namespace Flickett
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(15);
             timer.Tick += Timer_Tick;
+            LoginUsernameBox.Focus();
         }
 
 

@@ -79,9 +79,9 @@
                                 </Button>
                                 <StackPanel Orientation="Vertical" Width="660">
                                     <TextBlock Text="{Binding Title}" FontWeight="Bold" Foreground="White" FontSize="22" Margin="0,0,0,8"/>
-                                    <TextBlock Text="{Binding Runtime, StringFormat='Duration : {0} min'}" FontWeight="Bold" Foreground="White" Margin="0,0,0,10"/>
+                                    <TextBlock Text="{Binding GenreWithDuration}" FontWeight="DemiBold"  Foreground="White" Margin="0,0,0,10"/>
                                     <TextBlock Text="{Binding Overview}" TextWrapping="Wrap" Foreground="White"/>
-                                    <Button Name="AddMovieButton" Height="30" Width="65" Content="Add Movie" Background="Black" Foreground="White" BorderBrush="Gray" HorizontalAlignment="Right" Margin="50,40,0,0" Click="AddMovieButton_Click"/>
+                                    <Button x:Name="AddMovieButton" Height="30" Width="65" Content="Add Movie" Background="Black" Foreground="White" BorderBrush="Gray" HorizontalAlignment="Right" Margin="50,40,0,0" Click="AddMovieButton_Click"/>
                                 </StackPanel>
                             </StackPanel>
                         </DataTemplate>
