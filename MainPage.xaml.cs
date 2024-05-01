@@ -19,6 +19,8 @@ using System.IO;
 using MySql.Data.MySqlClient;
 using System.Data;
 using System.Diagnostics.Eventing.Reader;
+using static Flickett.MainPage;
+using System.Collections;
 
 namespace Flickett
 {
@@ -28,21 +30,22 @@ namespace Flickett
 
         private const string ApiKey = "186d8bc2a505456d116a65559e5d0788";
         private string userRole;
-      
+
+
+
         public MainPage(string role)
         {
             InitializeComponent();
             this.MouseDown += Window_MouseDown;
             this.userRole = role;
-            if (userRole == "admin")
+            bool isAdmin = (userRole == "admin");
+            if (isAdmin)
             {
                 LoadMovies();
             }
-            else if (userRole != "admin")
+            else
             {
                 LoadMoviesFromDb();
-                
-
             }
             DataContext = this;
 
@@ -56,7 +59,6 @@ namespace Flickett
         {
             try
             {
-    
                 using (HttpClient client = new HttpClient())
                 {
                     client.BaseAddress = new Uri("https://api.themoviedb.org/3/");
@@ -71,25 +73,19 @@ namespace Flickett
 
                         List<MovieViewModel> movies = new List<MovieViewModel>();
 
+                        var movieTasks = new List<Task<MovieViewModel>>();
+
                         foreach (dynamic movieData in data.results)
                         {
-                            string id = movieData.id;
-                            string title = movieData.title;
-                            string overview = movieData.overview;
-                            string posterUrl = $"https://image.tmdb.org/t/p/w500{movieData.poster_path}";
-                            int duration = await GetMovieDuration(client, id);
-                            string genre = await GetMovieGenre(client, id);
+                            movieTasks.Add(GetMovieDetails(client, movieData));
+                        }
 
+                        var movieResults = await Task.WhenAll(movieTasks);
 
-                            movies.Add(new MovieViewModel
-                            {
-                                MovieId = id,
-                                Title = title,
-                                Overview = overview,
-                                PosterUrl = posterUrl,
-                                Duration = duration,
-                                Genre = genre
-                            });
+                        foreach (var movie in movieResults)
+                        {
+                            movie.IsAdmin = true;
+                            movies.Add(movie);
                         }
 
                         // Bind the movie data to the ItemsControl
@@ -108,43 +104,6 @@ namespace Flickett
             }
         }
 
-
-        private async Task<int> GetMovieDuration(HttpClient client, string movieId)
-        {
-            HttpResponseMessage response = await client.GetAsync($"movie/{movieId}?api_key={ApiKey}&language=en-US");
-            if (response.IsSuccessStatusCode)
-            {
-                string json = await response.Content.ReadAsStringAsync();
-                dynamic movieDetails = JsonConvert.DeserializeObject(json);
-                return movieDetails.runtime;
-            }
-            else
-            {
-                throw new Exception("Failed to fetch movie details.");
-            }
-        }
-
-        private async Task<string> GetMovieGenre(HttpClient client, string movieId)
-        {
-            HttpResponseMessage response = await client.GetAsync($"movie/{movieId}?api_key={ApiKey}&language=en-US");
-            if (response.IsSuccessStatusCode)
-            {
-                string json = await response.Content.ReadAsStringAsync();
-                dynamic movieDetails = JsonConvert.DeserializeObject(json);
-                string genre = ""; // Initialize genre as empty string
-                foreach (dynamic genreData in movieDetails.genres)
-                {
-                    genre += genreData.name + ", "; // Concatenate genre names
-                }
-                genre = genre.TrimEnd(',', ' '); // Remove trailing comma and space
-                return genre;
-            }
-            else
-            {
-                throw new Exception("Failed to fetch movie details.");
-            }
-        }
-
         public class MovieViewModel
         {
             public string MovieId { get; set; }
@@ -154,7 +113,53 @@ namespace Flickett
             public string Genre { get; set; }
             public int Duration { get; set; }
             public string GenreWithDuration => $"{Duration}:min | {Genre}";
+            public bool IsAdmin { get; set; }
+
+
+
         }
+
+
+        private async Task<MovieViewModel> GetMovieDetails(HttpClient client, dynamic movieData)
+        {
+            string id = movieData.id;
+            string title = movieData.title;
+            string overview = movieData.overview;
+            string posterUrl = $"https://image.tmdb.org/t/p/w500{movieData.poster_path}";
+
+
+            HttpResponseMessage response = await client.GetAsync($"movie/{id}?api_key={ApiKey}&language=en-US");
+
+            if (response.IsSuccessStatusCode)
+            {
+                string json = await response.Content.ReadAsStringAsync();
+                dynamic movieDetails = JsonConvert.DeserializeObject(json);
+                int duration = movieDetails.runtime;
+
+                string genre = ""; // Initialize genre as empty string
+                foreach (dynamic genreData in movieDetails.genres)
+                {
+                    genre += genreData.name + ", "; // Concatenate genre names
+                }
+                genre = genre.TrimEnd(',', ' '); // Remove trailing comma and space
+
+                return new MovieViewModel
+                {
+                    MovieId = id,
+                    Title = title,
+                    Overview = overview,
+                    PosterUrl = posterUrl,
+                    Duration = duration,
+                    Genre = genre,
+                };
+            }
+            else
+            {
+                throw new Exception($"Failed to fetch details for movie with ID {id}.");
+            }
+        }
+
+      
 
         private async Task AddMovieToDatabase(MovieViewModel movie)
         {
@@ -194,7 +199,7 @@ namespace Flickett
             if (clickedButton == null)
                 return;
 
-          
+
 
 
             // Get the MovieViewModel object corresponding to the clicked button
@@ -217,6 +222,7 @@ namespace Flickett
 
         private void LoadMoviesFromDb()
         {
+
             try
             {
                 string connectionString = "server=localhost;uid=root;pwd=Antonow7;database=cinemadb;SslMode=None;";
@@ -246,7 +252,8 @@ namespace Flickett
                             Overview = overview,
                             PosterUrl = posterUrl,
                             Duration = duration,
-                            Genre = genre
+                            Genre = genre,
+                            IsAdmin = false
                         });
                     }
 
@@ -262,6 +269,15 @@ namespace Flickett
                 MessageBox.Show($"Error loading movies from database: {ex.Message}");
             }
         }
+
+
+
+      
+
+
+
+
+
 
 
 
@@ -344,6 +360,16 @@ namespace Flickett
             }
         }
 
+        private void LogOutButton_Click(object sender, RoutedEventArgs e)
+        {
+            lgnWindow Login = new lgnWindow();
+            Login.Show();
+            this.Close();
+        }
 
+        private void MovieSchedule_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
