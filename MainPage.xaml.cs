@@ -220,6 +220,21 @@ namespace Flickett
             }
         }
 
+        private void MovieSchedule_Click(object sender, RoutedEventArgs e)
+        {
+            // Get the clicked button
+            Button clickedButton = sender as Button;
+            if (clickedButton == null)
+                return;
+
+
+            // Get the MovieViewModel object corresponding to the clicked button
+            MovieViewModel movieToAdd = clickedButton.DataContext as MovieViewModel;
+            if (movieToAdd == null)
+                return;
+        }
+
+
         private void LoadMoviesFromDb()
         {
 
@@ -367,9 +382,9 @@ namespace Flickett
             this.Close();
         }
 
-        private void MovieSchedule_Click(object sender, RoutedEventArgs e)
-        {
+       
 
-        }
+       
+       
     }
 }

@@ -82,8 +82,8 @@
                                     <TextBlock Text="{Binding GenreWithDuration}" FontWeight="DemiBold"  Foreground="White" Margin="0,0,0,10"/>
                                     <TextBlock Text="{Binding Overview}" TextWrapping="Wrap" Foreground="White"/>
                                     <StackPanel Orientation="Horizontal" Margin="0,30,20,30">
-                                        <Button Name="AddMovieButton" Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVisibilityConverter}}" Height="30" Width="65" Content="Add Movie" Background="Black" Foreground="White" BorderBrush="Gray" HorizontalAlignment="Left"/>
-                                        <Button Name="MovieSchedule" Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVisibilityConverter}}" Height="30" Width="80" Content="Add Schedule" Background="Black" Foreground="White" BorderBrush="Gray" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+                                        <Button Name="AddMovieButton" Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVisibilityConverter}}" Height="30" Width="65" Content="Add Movie" Background="Black" Foreground="White" BorderBrush="Gray" HorizontalAlignment="Left" Click="AddMovieButton_Click"/>
+                                        <Button Name="MovieSchedule" Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVisibilityConverter}}" Height="30" Width="80" Content="Add Schedule" Background="Black" Foreground="White" BorderBrush="Gray" HorizontalAlignment="Left" Margin="10,0,0,0" Click="MovieSchedule_Click"/>
                                     </StackPanel>
                                 </StackPanel>
                             </StackPanel>
