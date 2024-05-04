@@ -1,0 +1,78 @@
+﻿<Window x:Class="Flickett.SchedulePanel"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Flickett"
+        mc:Ignorable="d"
+        Title="SchedulePanel" 
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Background="Transparent"
+        Height="600" 
+        Width="850">
+
+    <Grid Background="Black" HorizontalAlignment="Right" Width="850">
+        
+        
+        
+        <!--Header Elements -->
+        <Grid x:Name="HeaderElements" Height="90" Margin="0,-7,0,0" VerticalAlignment="Top">
+            <Button HorizontalAlignment="Left" Panel.ZIndex="2" Height="20" x:Name="CloseButton"  Margin="823 ,17,0,0" VerticalAlignment="Top" Width="21" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="CloseButton_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="/Resources/Images/bigger red button.png" Stretch="UniformToFill"/>
+                </Button.Background>
+            </Button>
+            <Button HorizontalAlignment="Left" x:Name="MaximizeButton" Panel.ZIndex="2" Height="20" Margin="798,17,0,0" VerticalAlignment="Top" Width="21" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="MaximizeButton_Click" >
+                <Button.Background>
+                    <ImageBrush ImageSource="/Resources/Images/bigger yellow button.png" Stretch="UniformToFill"/>
+                </Button.Background>
+            </Button>
+            <Button HorizontalAlignment="Left" Height="20" x:Name="MinimizeButton" Panel.ZIndex="2" Margin="773,17,0,0" VerticalAlignment="Top" Width="21" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="MinimizeButton_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="/Resources/Images/bigger green button.png" Stretch="UniformToFill"/>
+                </Button.Background>
+            </Button>
+            <Button Content="Button" HorizontalAlignment="Left" Height="45" VerticalAlignment="Center" Width="45" BorderBrush="{x:Null}" Foreground="{x:Null}" x:Name="hamburgerButton" Click="hamburgerButton_Click_1">
+                <Button.Background>
+                    <ImageBrush ImageSource="Resources/Images/hamburger button.png" Stretch="UniformToFill"/>
+                </Button.Background>
+            </Button>
+            <Ellipse HorizontalAlignment="Left" Height="90" Margin="366,0,0,0" VerticalAlignment="Center" Width="90" Fill="White">
+                <Ellipse.OpacityMask>
+                    <ImageBrush ImageSource="/Resources/Images/F logo.png"/>
+                </Ellipse.OpacityMask>
+            </Ellipse>
+
+        </Grid>
+
+
+        <!--Slider-->
+        
+        <Grid HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="SlideMenu" Margin="0,0,0,0" Height="600" Width="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="49*"/>
+                <RowDefinition Height="551*"/>
+            </Grid.RowDefinitions>
+            <Rectangle HorizontalAlignment="Left" Height="80" Stroke="Black" VerticalAlignment="Top" Width="200" Margin="-202,-2,0,0" Grid.RowSpan="2"/>
+            <Rectangle HorizontalAlignment="Left" Height="600" Stroke="Black" VerticalAlignment="Top" Width="200" Fill="White" Margin="-202,0,0,0" Grid.RowSpan="2"/>
+            <Button Content="Button" HorizontalAlignment="Left" Height="57" Margin="-195,8,0,0" VerticalAlignment="Top" Width="57" Foreground="{x:Null}" BorderBrush="{x:Null}" Grid.RowSpan="2">
+                <Button.Background>
+                    <ImageBrush ImageSource="/Resources/Images/pp.png" Stretch="UniformToFill"/>
+                </Button.Background>
+            </Button>
+            <TextBlock HorizontalAlignment="Left" Height="19" Margin="-133,34,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="89" x:Name="ProfileName" FontWeight="Bold" FontSize="14" Grid.RowSpan="2"/>
+            <Button Name="LogOutButton" Click="LogOutButton_Click" HorizontalAlignment="Left" Height="26" Margin="-36,30,0,0" VerticalAlignment="Top" Width="26" BorderBrush="{x:Null}" Grid.RowSpan="2" >
+                <Button.Background>
+                    <ImageBrush ImageSource="/Resources/Images/log out.png"/>
+                </Button.Background>
+            </Button>
+
+
+        </Grid>
+
+
+
+    </Grid>
+</Window>

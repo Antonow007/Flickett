@@ -55,9 +55,10 @@
 
     </Window.Resources>
 
-
+    
     <Grid Background="Black" HorizontalAlignment="Right" Width="850">
 
+    <!--Movie Load Template--> 
         <Grid Margin="0,155,0,0" Height="445" VerticalAlignment="Top" HorizontalAlignment="Right" Width="850">
             <ScrollViewer Height="445" VerticalAlignment="Center" >
                 <!-- Movie List -->
@@ -94,7 +95,8 @@
         </Grid>
 
 
-
+        <!--Header Elements-->
+        
         <Grid x:Name="HeaderElements" Height="90" Margin="0,-7,0,0" VerticalAlignment="Top">
             <Button HorizontalAlignment="Left" Panel.ZIndex="2" Height="20" x:Name="CloseButton"  Margin="823 ,17,0,0" VerticalAlignment="Top" Width="21" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="CloseButton_Click">
                 <Button.Background>
@@ -125,7 +127,8 @@
         </Grid>
 
 
-
+        <!--Slider Menu-->
+        
         <Grid HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="SlideMenu" Margin="0,0,0,0" Height="600" Width="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="49*"/>

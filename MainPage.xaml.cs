@@ -222,16 +222,22 @@ namespace Flickett
 
         private void MovieSchedule_Click(object sender, RoutedEventArgs e)
         {
-            // Get the clicked button
+            
+            SchedulePanel schPanel = new SchedulePanel();
+            schPanel.Show();
+            this.Close();
+
+
             Button clickedButton = sender as Button;
             if (clickedButton == null)
                 return;
-
-
-            // Get the MovieViewModel object corresponding to the clicked button
+  
             MovieViewModel movieToAdd = clickedButton.DataContext as MovieViewModel;
             if (movieToAdd == null)
                 return;
+
+
+
         }
 
 
