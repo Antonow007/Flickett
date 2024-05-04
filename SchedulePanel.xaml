@@ -13,23 +13,27 @@
         Height="600" 
         Width="850">
 
-    <Grid Background="Black" HorizontalAlignment="Right" Width="850">
-        
-        
-        
+    <Grid Background="Transparent" HorizontalAlignment="Right" Width="850" Height="600" >
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="90"/>
+            <RowDefinition Height="510"/>
+        </Grid.RowDefinitions>
+
+
         <!--Header Elements -->
-        <Grid x:Name="HeaderElements" Height="90" Margin="0,-7,0,0" VerticalAlignment="Top">
-            <Button HorizontalAlignment="Left" Panel.ZIndex="2" Height="20" x:Name="CloseButton"  Margin="823 ,17,0,0" VerticalAlignment="Top" Width="21" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="CloseButton_Click">
+        <Grid Grid.Row="0" Background="Black"  x:Name="HeaderElements" Height="90" Margin="0,-7,0,0" VerticalAlignment="Top">
+            <Button HorizontalAlignment="Left" Panel.ZIndex="0" Height="20" x:Name="CloseButton"  Margin="823 ,17,0,0" VerticalAlignment="Top" Width="21" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="CloseButton_Click">
                 <Button.Background>
                     <ImageBrush ImageSource="/Resources/Images/bigger red button.png" Stretch="UniformToFill"/>
                 </Button.Background>
             </Button>
-            <Button HorizontalAlignment="Left" x:Name="MaximizeButton" Panel.ZIndex="2" Height="20" Margin="798,17,0,0" VerticalAlignment="Top" Width="21" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="MaximizeButton_Click" >
+            <Button HorizontalAlignment="Left" x:Name="MaximizeButton" Panel.ZIndex="0" Height="20" Margin="798,17,0,0" VerticalAlignment="Top" Width="21" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="MaximizeButton_Click" >
                 <Button.Background>
                     <ImageBrush ImageSource="/Resources/Images/bigger yellow button.png" Stretch="UniformToFill"/>
                 </Button.Background>
             </Button>
-            <Button HorizontalAlignment="Left" Height="20" x:Name="MinimizeButton" Panel.ZIndex="2" Margin="773,17,0,0" VerticalAlignment="Top" Width="21" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="MinimizeButton_Click">
+            <Button HorizontalAlignment="Left" Height="20" x:Name="MinimizeButton" Panel.ZIndex="0" Margin="773,17,0,0" VerticalAlignment="Top" Width="21" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="MinimizeButton_Click">
                 <Button.Background>
                     <ImageBrush ImageSource="/Resources/Images/bigger green button.png" Stretch="UniformToFill"/>
                 </Button.Background>
@@ -48,31 +52,42 @@
         </Grid>
 
 
-        <!--Slider-->
-        
-        <Grid HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="SlideMenu" Margin="0,0,0,0" Height="600" Width="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="49*"/>
-                <RowDefinition Height="551*"/>
-            </Grid.RowDefinitions>
-            <Rectangle HorizontalAlignment="Left" Height="80" Stroke="Black" VerticalAlignment="Top" Width="200" Margin="-202,-2,0,0" Grid.RowSpan="2"/>
-            <Rectangle HorizontalAlignment="Left" Height="600" Stroke="Black" VerticalAlignment="Top" Width="200" Fill="White" Margin="-202,0,0,0" Grid.RowSpan="2"/>
-            <Button Content="Button" HorizontalAlignment="Left" Height="57" Margin="-195,8,0,0" VerticalAlignment="Top" Width="57" Foreground="{x:Null}" BorderBrush="{x:Null}" Grid.RowSpan="2">
-                <Button.Background>
-                    <ImageBrush ImageSource="/Resources/Images/pp.png" Stretch="UniformToFill"/>
-                </Button.Background>
-            </Button>
-            <TextBlock HorizontalAlignment="Left" Height="19" Margin="-133,34,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="89" x:Name="ProfileName" FontWeight="Bold" FontSize="14" Grid.RowSpan="2"/>
-            <Button Name="LogOutButton" Click="LogOutButton_Click" HorizontalAlignment="Left" Height="26" Margin="-36,30,0,0" VerticalAlignment="Top" Width="26" BorderBrush="{x:Null}" Grid.RowSpan="2" >
-                <Button.Background>
-                    <ImageBrush ImageSource="/Resources/Images/log out.png"/>
-                </Button.Background>
-            </Button>
+        <!--Content Template-->
+        <Grid Grid.Row="1" Width="850" Height="510" VerticalAlignment="Top"  Background="Black"  Margin="-3,5,3,0" >
+
+            <Rectangle x:Name="PosterBox" Height="300" Width="200" Margin="30,0,0,150" HorizontalAlignment="Left" Stroke="White" StrokeThickness="2">
+                <Rectangle.Fill>
+                    <ImageBrush ImageSource="{Binding PosterUrl}" Stretch="UniformToFill"/>
+                </Rectangle.Fill>
+            </Rectangle>
+            <TextBlock x:Name="OverViewTextBox" Margin="257,131,345,175" FontWeight="Bold" TextWrapping="Wrap" Foreground="White"/>
+            <TextBlock x:Name="TitleTextBlock" Margin="257,40,18,398" FontWeight="Bold" Foreground="White" FontSize="22"/>
+            <TextBlock x:Name="GenresAndDurationTextBox" Width="200" Height="40" Margin="30,333,611,127" FontWeight="DemiBold"  Foreground="White"/>
+            <DatePicker Margin="529,128,121,351" Width="200" BorderThickness="0" />
+
+            <ComboBox x:Name="hoursComboBox" Width="50" Height="30" Margin="531,188,269,282"/>
+            <ComboBox x:Name="minutesComboBox" Width="50" Height="30" Margin="598,188,202,282"/>
+            <ComboBox x:Name="SelectHall" Height="30" Margin="676,188,51,282"/>
+
+            <TextBlock HorizontalAlignment="Left" Height="23" Margin="533,166,0,0" TextWrapping="Wrap" FontSize="14" Text="Hour:" Foreground="White" VerticalAlignment="Top" Width="45"/>
+            <TextBlock HorizontalAlignment="Left" Height="21" Margin="600,166,0,0" TextWrapping="Wrap" FontSize="14" Text="Min:" Foreground="White" VerticalAlignment="Top" Width="45"/>
+            <TextBlock HorizontalAlignment="Left" Height="21" Margin="678,166,0,0" TextWrapping="Wrap" FontSize="14" Text="Hall:" Foreground="White" VerticalAlignment="Top" Width="46"/>
+
 
 
         </Grid>
 
 
 
+
+
+
     </Grid>
 </Window>
+
+    
+    
+    
+    
+    
+    

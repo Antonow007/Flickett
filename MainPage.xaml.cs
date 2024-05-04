@@ -112,7 +112,7 @@ namespace Flickett
             public string PosterUrl { get; set; }
             public string Genre { get; set; }
             public int Duration { get; set; }
-            public string GenreWithDuration => $"{Duration}:min | {Genre}";
+            public string GenreWithDuration => $"{Duration} min | {Genre}";
             public bool IsAdmin { get; set; }
 
 
@@ -223,10 +223,6 @@ namespace Flickett
         private void MovieSchedule_Click(object sender, RoutedEventArgs e)
         {
             
-            SchedulePanel schPanel = new SchedulePanel();
-            schPanel.Show();
-            this.Close();
-
 
             Button clickedButton = sender as Button;
             if (clickedButton == null)
@@ -236,6 +232,9 @@ namespace Flickett
             if (movieToAdd == null)
                 return;
 
+            SchedulePanel schPanel = new SchedulePanel(movieToAdd);
+            schPanel.Show();
+            this.Close();
 
 
         }
