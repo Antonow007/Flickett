@@ -112,8 +112,10 @@ namespace Flickett
             public string PosterUrl { get; set; }
             public string Genre { get; set; }
             public int Duration { get; set; }
+            public List<string> ScreeningTimes { get; set; }
             public string GenreWithDuration => $"{Duration} min | {Genre}";
             public bool IsAdmin { get; set; }
+
 
 
 
@@ -159,7 +161,7 @@ namespace Flickett
             }
         }
 
-      
+
 
         private async Task AddMovieToDatabase(MovieViewModel movie)
         {
@@ -222,12 +224,12 @@ namespace Flickett
 
         private void MovieSchedule_Click(object sender, RoutedEventArgs e)
         {
-            
+
 
             Button clickedButton = sender as Button;
             if (clickedButton == null)
                 return;
-  
+
             MovieViewModel movieToAdd = clickedButton.DataContext as MovieViewModel;
             if (movieToAdd == null)
                 return;
@@ -242,7 +244,6 @@ namespace Flickett
 
         private void LoadMoviesFromDb()
         {
-
             try
             {
                 string connectionString = "server=localhost;uid=root;pwd=Antonow7;database=cinemadb;SslMode=None;";
@@ -252,7 +253,8 @@ namespace Flickett
                 {
                     connection.Open();
 
-                    string query = "SELECT * FROM Movies";
+                    string query = " SELECT m.*, TIME_FORMAT(s.ScreeningTime, '%H:%i') AS ScreeningTime FROM Movies m    INNER JOIN Screenings s ON m.ApiMovieId = s.MovieId    WHERE DATE(s.ScreeningDate) = CURRENT_DATE()";
+
                     MySqlCommand command = new MySqlCommand(query, connection);
                     MySqlDataReader reader = command.ExecuteReader();
 
@@ -264,25 +266,36 @@ namespace Flickett
                         string posterUrl = reader["PosterUrl"].ToString();
                         int duration = Convert.ToInt32(reader["Duration"]);
                         string genre = reader["Genre"].ToString();
+                        string screeningTime = reader["ScreeningTime"].ToString();
 
-                        movies.Add(new MovieViewModel
+                        
+                        var movie = movies.FirstOrDefault(m => m.MovieId == id);
+                        if (movie == null)
                         {
-                            MovieId = id,
-                            Title = title,
-                            Overview = overview,
-                            PosterUrl = posterUrl,
-                            Duration = duration,
-                            Genre = genre,
-                            IsAdmin = false
-                        });
+                            movie = new MovieViewModel
+                            {
+                                MovieId = id,
+                                Title = title,
+                                Overview = overview,
+                                PosterUrl = posterUrl,
+                                Duration = duration,
+                                Genre = genre,
+                                IsAdmin = false,
+                                ScreeningTimes = new List<string>()
+                            };
+                            movies.Add(movie);
+                        }
+
+                       
+                        movie.ScreeningTimes.Add(screeningTime);
                     }
 
                     reader.Close();
                 }
 
-                // Bind the movie data to the ItemsControl
+                
                 MovieItemsControl.ItemsSource = movies;
-                MovieItemsControl.DataContext = this; // Set DataContext to the instance of MainPage
+                MovieItemsControl.DataContext = this; 
             }
             catch (Exception ex)
             {
@@ -292,7 +305,8 @@ namespace Flickett
 
 
 
-      
+
+
 
 
 
@@ -387,9 +401,9 @@ namespace Flickett
             this.Close();
         }
 
-       
 
-       
-       
+
+
+
     }
 }

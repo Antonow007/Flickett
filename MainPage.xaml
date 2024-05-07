@@ -82,6 +82,18 @@
                                     <TextBlock Text="{Binding Title}" FontWeight="Bold" Foreground="White" FontSize="22" Margin="0,0,0,8"/>
                                     <TextBlock Text="{Binding GenreWithDuration}" FontWeight="DemiBold"  Foreground="White" Margin="0,0,0,10"/>
                                     <TextBlock Text="{Binding Overview}" TextWrapping="Wrap" Foreground="White"/>
+                                    <ItemsControl ItemsSource="{Binding ScreeningTimes}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Button Content="{Binding}" Height="30" Width="80" Background="Black" Foreground="White" BorderBrush="Gray" Margin="0,5,5,0"/>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
                                     <StackPanel Orientation="Horizontal" Margin="0,30,20,30">
                                         <Button Name="AddMovieButton" Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVisibilityConverter}}" Height="30" Width="65" Content="Add Movie" Background="Black" Foreground="White" BorderBrush="Gray" HorizontalAlignment="Left" Click="AddMovieButton_Click"/>
                                         <Button Name="MovieSchedule" Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVisibilityConverter}}" Height="30" Width="80" Content="Add Schedule" Background="Black" Foreground="White" BorderBrush="Gray" HorizontalAlignment="Left" Margin="10,0,0,0" Click="MovieSchedule_Click"/>
