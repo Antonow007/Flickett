@@ -17,6 +17,7 @@ namespace Flickett
         public SchedulePanel(MovieViewModel movieData)
         {
             InitializeComponent();
+          
             this.movieData = movieData;
 
             this.MouseDown += Window_MouseDown;

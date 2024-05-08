@@ -44,6 +44,7 @@ namespace Flickett
             {
                 LoadMovies();
             }
+
             else
             {
                 LoadMoviesFromDb();
