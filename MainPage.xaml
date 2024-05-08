@@ -90,17 +90,25 @@
                                         </ItemsControl.ItemsPanel>
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <Button Content="{Binding}" Height="30" Width="80" Background="Black" Foreground="White" BorderBrush="Gray" Margin="0,5,5,0"/>
+                                                <Button Content="{Binding}" Name="ScheduleTimeButtons" Height="35" Width="65" Background="DarkOrange" Foreground="Black" Margin="0,45,10,0" FontSize="15" FontWeight="Medium"  VerticalContentAlignment="Center" Click="ScheduleTimeButtons_Click">
+                                                    <Button.Template>
+                                                        <ControlTemplate TargetType="Button">
+                                                            <Border Background="{TemplateBinding Background}" CornerRadius="4">
+                                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                            </Border>
+                                                        </ControlTemplate>      
+                                                    </Button.Template>
+                                                </Button>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
+                                    </ItemsControl> 
                                     <StackPanel Orientation="Horizontal" Margin="0,30,20,30">
                                         <Button Name="AddMovieButton" Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVisibilityConverter}}" Height="30" Width="65" Content="Add Movie" Background="Black" Foreground="White" BorderBrush="Gray" HorizontalAlignment="Left" Click="AddMovieButton_Click"/>
                                         <Button Name="MovieSchedule" Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVisibilityConverter}}" Height="30" Width="80" Content="Add Schedule" Background="Black" Foreground="White" BorderBrush="Gray" HorizontalAlignment="Left" Margin="10,0,0,0" Click="MovieSchedule_Click"/>
                                     </StackPanel>
                                 </StackPanel>
                             </StackPanel>
-                        </DataTemplate>
+                        </DataTemplate>                                                             
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>

@@ -21,6 +21,7 @@ using System.Data;
 using System.Diagnostics.Eventing.Reader;
 using static Flickett.MainPage;
 using System.Collections;
+using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
 
 namespace Flickett
 {
@@ -401,9 +402,27 @@ namespace Flickett
             this.Close();
         }
 
+        private void ScheduleTimeButtons_Click(object sender, RoutedEventArgs e)
+        {
 
 
 
+            Button clickedButton = sender as Button;
+            if (clickedButton == null)
+                return;
 
+            MovieViewModel movieToAdd = clickedButton.DataContext as MovieViewModel;
+            if (movieToAdd == null)
+                return;
+
+
+            string screeningTime = clickedButton.Content.ToString();
+
+
+            SelectSeats seats = new SelectSeats(movieToAdd, screeningTime);
+            seats.Show();
+            this.Hide();
+
+        }
     }
 }

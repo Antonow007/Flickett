@@ -22,6 +22,7 @@
     <None Remove="Resources\Images\log out.png" />
     <None Remove="Resources\Images\pp.png" />
     <None Remove="Resources\Images\search.png" />
+    <None Remove="screen 2.png" />
     <None Remove="white arrow.png" />
   </ItemGroup>
 
@@ -42,6 +43,7 @@
     <Resource Include="Resources\Images\pp.png" />
     <Resource Include="Resources\Images\search.png" />
     <Resource Include="Resources\Images\white arrow.png" />
+    <Resource Include="screen 2.png" />
   </ItemGroup>
 
 </Project>
