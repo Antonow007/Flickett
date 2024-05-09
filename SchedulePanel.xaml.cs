@@ -179,13 +179,13 @@ namespace Flickett
 
             try
             {
-                // Get the selected values from UI elements
+                
                 string selectedMovieId = movieData.MovieId;
                 DateTime selectedDate = datePicker.SelectedDate ?? DateTime.MinValue;
                 TimeSpan selectedTime = GetSelectedTime();
                 string selectedHall = SelectHall.SelectedItem as string;
 
-                // Construct the SQL query
+                
                 string connectionString = "server=localhost;uid=root;pwd=Antonow7;database=cinemadb;SslMode=None;";
                 string query = "INSERT INTO Screenings (MovieId, ScreeningDate, ScreeningTime, HallId) VALUES (@MovieId, @ScreeningDate, @ScreeningTime, @HallId);";
 

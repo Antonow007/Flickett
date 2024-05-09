@@ -34,7 +34,7 @@ namespace Flickett
 
 
 
-        public MainPage(string role)
+        public MainPage(string role = "") 
         {
             InitializeComponent();
             this.MouseDown += Window_MouseDown;
@@ -54,7 +54,10 @@ namespace Flickett
         }
 
 
-
+        public MainPage(string role, string username) : this(role)
+        {
+            
+        }
 
 
         private async void LoadMovies()
@@ -90,9 +93,9 @@ namespace Flickett
                             movies.Add(movie);
                         }
 
-                        // Bind the movie data to the ItemsControl
+                       
                         MovieItemsControl.ItemsSource = movies;
-                        MovieItemsControl.DataContext = this; // Set DataContext to the instance of MainPage
+                        MovieItemsControl.DataContext = this; 
                     }
                     else
                     {
@@ -117,10 +120,11 @@ namespace Flickett
             public List<string> ScreeningTimes { get; set; }
             public string GenreWithDuration => $"{Duration} min | {Genre}";
             public bool IsAdmin { get; set; }
-
-
-
-
+            public decimal basePrice { get; set; }
+            public string ScreeningTime { get; set; }
+            public string ScreeningDate { get; set; }
+            public string HallName { get; set; }
+            
         }
 
 
@@ -140,12 +144,12 @@ namespace Flickett
                 dynamic movieDetails = JsonConvert.DeserializeObject(json);
                 int duration = movieDetails.runtime;
 
-                string genre = ""; // Initialize genre as empty string
+                string genre = ""; 
                 foreach (dynamic genreData in movieDetails.genres)
                 {
-                    genre += genreData.name + ", "; // Concatenate genre names
+                    genre += genreData.name + ", "; 
                 }
-                genre = genre.TrimEnd(',', ' '); // Remove trailing comma and space
+                genre = genre.TrimEnd(',', ' '); 
 
                 return new MovieViewModel
                 {
@@ -198,7 +202,7 @@ namespace Flickett
 
         private async void AddMovieButton_Click(object sender, RoutedEventArgs e)
         {
-            // Get the clicked button
+           
             Button clickedButton = sender as Button;
             if (clickedButton == null)
                 return;
@@ -206,14 +210,14 @@ namespace Flickett
 
 
 
-            // Get the MovieViewModel object corresponding to the clicked button
+          
             MovieViewModel movieToAdd = clickedButton.DataContext as MovieViewModel;
             if (movieToAdd == null)
                 return;
 
             try
             {
-                // Call method to save the movie to the database
+               
                 await AddMovieToDatabase(movieToAdd);
 
                 MessageBox.Show("Movie added successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -306,9 +310,52 @@ namespace Flickett
         }
 
 
+        private void ScheduleTimeButtons_Click(object sender, RoutedEventArgs e)
+        {
+
+
+            Button clickedButton = sender as Button;
+            if (clickedButton == null)
+                return;
+
+            
+            StackPanel parentStackPanel = FindParent<StackPanel>(clickedButton);
+            if (parentStackPanel == null)
+                return;
+
+            
+            MovieViewModel movieToAdd = parentStackPanel.DataContext as MovieViewModel;
+            if (movieToAdd == null)
+                return;
+
+           
+            string screeningTime = clickedButton.Content?.ToString();
+            if (string.IsNullOrEmpty(screeningTime))
+                return;
 
 
 
+
+            SelectTickets tickets = new SelectTickets(movieToAdd, screeningTime);
+            tickets.Show();
+            this.Hide();
+
+           
+
+
+        }
+
+        public static T FindParent<T>(DependencyObject child) where T : DependencyObject
+        {
+            DependencyObject parentObject = VisualTreeHelper.GetParent(child);
+            if (parentObject == null)
+                return null;
+
+            if (parentObject is T parent)
+                return parent;
+
+            return FindParent<T>(parentObject);
+        }
 
 
 
@@ -391,8 +438,7 @@ namespace Flickett
             var button = sender as Button;
             if (button != null && button.Tag != null)
             {
-                var movieId = button.Tag; // Retrieve the movie ID from the Tag property
-                                          // Perform actions based on the clicked movie
+                var movieId = button.Tag; 
             }
         }
 
@@ -403,27 +449,6 @@ namespace Flickett
             this.Close();
         }
 
-        private void ScheduleTimeButtons_Click(object sender, RoutedEventArgs e)
-        {
-
-
-
-            Button clickedButton = sender as Button;
-            if (clickedButton == null)
-                return;
-
-            MovieViewModel movieToAdd = clickedButton.DataContext as MovieViewModel;
-            if (movieToAdd == null)
-                return;
-
-
-            string screeningTime = clickedButton.Content.ToString();
-
-
-            SelectSeats seats = new SelectSeats(movieToAdd, screeningTime);
-            seats.Show();
-            this.Hide();
-
-        }
+       
     }
 }

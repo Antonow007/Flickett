@@ -13,6 +13,32 @@
         Height="600" 
         Width="850">
 
+
+
+
+    <Window.Resources>
+        <Style x:Key="RoundedButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Green"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="10, 10, 0, 0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="Orange"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid Background="Transparent" HorizontalAlignment="Right" Width="850" Height="600" Panel.ZIndex="-1" >
 
 
@@ -113,7 +139,7 @@
 
                 <!--Seats-->
 
-                <Grid Grid.Row="0">
+                <Grid Grid.Row="0" x:Name="SeatsLayout">
 
                     <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -168,6 +194,13 @@
                     <TextBlock Grid.Row="8" Grid.Column="12" Foreground="White" Text="3" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     <TextBlock Grid.Row="9" Grid.Column="12" Foreground="White" Text="2" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     <TextBlock Grid.Row="10" Grid.Column="12" Foreground="White" Text="1" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                    <Button Click="PayButton_Click" x:Name="PayButton" Grid.Column="13" Grid.ColumnSpan="4" Background="Black" Foreground="White" Content="Pay" FontSize="20" BorderThickness="0" Margin="0,5,10,0"/>
+
+
+
+
+
 
 
                 </Grid>

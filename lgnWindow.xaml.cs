@@ -14,6 +14,13 @@ namespace Flickett
 
     public partial class lgnWindow : Window
     {
+
+        public static class GlobalVariables
+        {
+            public static string UserId { get; set; }
+        }
+
+
         private DispatcherTimer timer;
         bool isUsernameValid = false;
         bool isEmailValid = false;
@@ -134,7 +141,6 @@ namespace Flickett
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-
             string username = LoginUsernameBox.Text;
             string password = LoginPasswordBox.Password;
 
@@ -145,7 +151,6 @@ namespace Flickett
                 {
                     con.Open();
 
-
                     string usernameQuery = "SELECT COUNT(*) FROM Users WHERE username = @Username";
                     using (MySqlCommand usernameCmd = new MySqlCommand(usernameQuery, con))
                     {
@@ -154,7 +159,6 @@ namespace Flickett
 
                         if (usernameCount > 0)
                         {
-
                             string passwordQuery = "SELECT COUNT(*) FROM Users WHERE username = @Username AND passwod = @Password";
                             using (MySqlCommand passwordCmd = new MySqlCommand(passwordQuery, con))
                             {
@@ -164,20 +168,34 @@ namespace Flickett
 
                                 if (passwordCount > 0)
                                 {
-
-                                    // Get user's role
+                                    
                                     string roleQuery = "SELECT Role FROM Users WHERE username = @Username";
                                     using (MySqlCommand roleCmd = new MySqlCommand(roleQuery, con))
                                     {
                                         roleCmd.Parameters.AddWithValue("@Username", username);
                                         string role = roleCmd.ExecuteScalar().ToString();
 
-                                        // Open main window and pass the username and role
+                                       
                                         MainPage mainPage = new MainPage(role);
                                         mainPage.Show();
                                         this.Close();
                                     }
-                               
+
+                                   
+                                    string IdQuery = "SELECT Id FROM Users WHERE username = @Username";
+                                    using (MySqlCommand IdCmd = new MySqlCommand(IdQuery, con))
+                                    {
+                                        IdCmd.Parameters.AddWithValue("@Username", username);
+                                        string userId = IdCmd.ExecuteScalar()?.ToString();
+                                        if (userId != null)
+                                        {
+                                           
+                                            GlobalVariables.UserId = userId;
+
+                                           
+                                           
+                                        }
+                                    }
                                 }
                                 else
                                 {
@@ -198,14 +216,16 @@ namespace Flickett
             {
                 MessageBox.Show("Error: " + ex.Message);
             }
-
-
-
         }
 
-        //Register Part
 
-        private void RegisterUsernameBox_TextChanged(object sender, TextChangedEventArgs e)
+
+
+    
+
+    //Register Part
+
+    private void RegisterUsernameBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (string.IsNullOrEmpty(RegisterUsernameBox.Text))
             {

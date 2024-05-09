@@ -131,6 +131,7 @@ namespace Flickett
             }
         }
 
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             string connectionString = "server=localhost;uid=root;pwd=Antonow7;database=cinemadb;SslMode=None;";
@@ -138,6 +139,7 @@ namespace Flickett
             int capacity;
             bool isCapacityValid = int.TryParse(CapacityBox.Text, out capacity);
             string category = CategoryBox.Text;
+            int ticketTypeid = 0;
 
             if (string.IsNullOrWhiteSpace(hallName) || !isCapacityValid || string.IsNullOrWhiteSpace(category))
             {
@@ -147,13 +149,29 @@ namespace Flickett
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                string query = "INSERT INTO Halls (HallName, Capacity, Category) VALUES (@HallName, @Capacity, @Category)";
+                string query = "INSERT INTO Halls (HallName, Capacity, Category,TicketTypeId) VALUES (@HallName, @Capacity, @Category,@TicketTypeId)";
 
                 MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@HallName", hallName);
                 command.Parameters.AddWithValue("@Capacity", capacity);
                 command.Parameters.AddWithValue("@Category", category);
-
+                if (category=="3d" || category=="3D")
+                {
+                    ticketTypeid = 25;
+                }
+                else if (category == "2d" || category == "2D")
+                {
+                    ticketTypeid = 24;
+                }
+                else if (category == "imax" || category == "IMAX")
+                {
+                    ticketTypeid = 23;
+                }
+                else if (category == "4dx" || category == "4DX")
+                {
+                    ticketTypeid = 26;
+                }
+                command.Parameters.AddWithValue("@TicketTypeId", ticketTypeid);
                 try
                 {
                     connection.Open();
@@ -161,7 +179,7 @@ namespace Flickett
                     if (rowsAffected > 0)
                     {
                         MessageBox.Show("Data added successfully.");
-                        // Clear text boxes after successful insertion
+                       
                         HallNameBox.Clear();
                         CapacityBox.Clear();
                         CategoryBox.Clear();
