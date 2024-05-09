@@ -167,7 +167,7 @@ namespace Flickett
             }
         }
 
-
+         
 
         private async Task AddMovieToDatabase(MovieViewModel movie)
         {
@@ -247,7 +247,6 @@ namespace Flickett
 
         }
 
-
         private void LoadMoviesFromDb()
         {
             try
@@ -309,7 +308,6 @@ namespace Flickett
             }
         }
 
-
         private void ScheduleTimeButtons_Click(object sender, RoutedEventArgs e)
         {
 
@@ -356,10 +354,6 @@ namespace Flickett
 
             return FindParent<T>(parentObject);
         }
-
-
-
-
 
 
 

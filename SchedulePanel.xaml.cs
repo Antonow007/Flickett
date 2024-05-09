@@ -49,14 +49,112 @@ namespace Flickett
             }
         }
 
-        
-
+       
         public TimeSpan GetSelectedTime()
         {
             int hours = int.Parse(hoursComboBox.SelectedItem.ToString());
             int minutes = int.Parse(minutesComboBox.SelectedItem.ToString());
             return new TimeSpan(hours, minutes, 0);
         }
+
+        private void ShowHallDAta()
+        {
+            
+            string connectionString = "server=localhost;uid=root;pwd=Antonow7;database=cinemadb;SslMode=None;";
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                string query = "SELECT HallName FROM Halls";
+
+                MySqlCommand command = new MySqlCommand(query, connection);
+
+                try
+                {
+                    connection.Open();
+                    MySqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        string hallName = reader["HallName"].ToString();
+                        SelectHall.Items.Add(hallName);
+                    }
+
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("An error occurred: " + ex.Message);
+                }
+            }
+        }
+  
+        private void AddScheduleButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            try
+            {
+                
+                string selectedMovieId = movieData.MovieId;
+                DateTime selectedDate = datePicker.SelectedDate ?? DateTime.MinValue;
+                TimeSpan selectedTime = GetSelectedTime();
+                string selectedHall = SelectHall.SelectedItem as string;
+
+                
+                string connectionString = "server=localhost;uid=root;pwd=Antonow7;database=cinemadb;SslMode=None;";
+                string query = "INSERT INTO Screenings (MovieId, ScreeningDate, ScreeningTime, HallId) VALUES (@MovieId, @ScreeningDate, @ScreeningTime, @HallId);";
+
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@MovieId", selectedMovieId);
+                    command.Parameters.AddWithValue("@ScreeningDate", selectedDate);
+                    command.Parameters.AddWithValue("@ScreeningTime", selectedTime);
+                    command.Parameters.AddWithValue("@HallId", GetHallId(selectedHall));
+
+                    connection.Open();
+                    int rowsAffected = command.ExecuteNonQuery();
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show("Screening added successfully!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to add screening.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred: " + ex.Message);
+            }
+
+        }
+
+        private int GetHallId(string hallName)
+        {
+            int hallId = -1;
+
+            string connectionString = "server=localhost;uid=root;pwd=Antonow7;database=cinemadb;SslMode=None;";
+            string query = "SELECT HallId FROM Halls WHERE HallName = @HallName;";
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@HallName", hallName);
+
+                connection.Open();
+                var result = command.ExecuteScalar();
+
+                if (result != null && result != DBNull.Value)
+                {
+                    hallId = Convert.ToInt32(result);
+                }
+            }
+
+            return hallId;
+        }
+
+
+
 
         private void MoveSliderMenuToRight()
         {
@@ -141,104 +239,6 @@ namespace Flickett
             this.Close();
         }
 
-
-
-        private void ShowHallDAta()
-        {
-            
-            string connectionString = "server=localhost;uid=root;pwd=Antonow7;database=cinemadb;SslMode=None;";
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
-            {
-                string query = "SELECT HallName FROM Halls";
-
-                MySqlCommand command = new MySqlCommand(query, connection);
-
-                try
-                {
-                    connection.Open();
-                    MySqlDataReader reader = command.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        string hallName = reader["HallName"].ToString();
-                        SelectHall.Items.Add(hallName);
-                    }
-
-                    reader.Close();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("An error occurred: " + ex.Message);
-                }
-            }
-        }
-
-        
-        private void AddScheduleButton_Click(object sender, RoutedEventArgs e)
-        {
-
-            try
-            {
-                
-                string selectedMovieId = movieData.MovieId;
-                DateTime selectedDate = datePicker.SelectedDate ?? DateTime.MinValue;
-                TimeSpan selectedTime = GetSelectedTime();
-                string selectedHall = SelectHall.SelectedItem as string;
-
-                
-                string connectionString = "server=localhost;uid=root;pwd=Antonow7;database=cinemadb;SslMode=None;";
-                string query = "INSERT INTO Screenings (MovieId, ScreeningDate, ScreeningTime, HallId) VALUES (@MovieId, @ScreeningDate, @ScreeningTime, @HallId);";
-
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    MySqlCommand command = new MySqlCommand(query, connection);
-                    command.Parameters.AddWithValue("@MovieId", selectedMovieId);
-                    command.Parameters.AddWithValue("@ScreeningDate", selectedDate);
-                    command.Parameters.AddWithValue("@ScreeningTime", selectedTime);
-                    command.Parameters.AddWithValue("@HallId", GetHallId(selectedHall));
-
-                    connection.Open();
-                    int rowsAffected = command.ExecuteNonQuery();
-                    if (rowsAffected > 0)
-                    {
-                        MessageBox.Show("Screening added successfully!");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Failed to add screening.");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("An error occurred: " + ex.Message);
-            }
-
-        }
-
-        private int GetHallId(string hallName)
-        {
-            int hallId = -1;
-
-            string connectionString = "server=localhost;uid=root;pwd=Antonow7;database=cinemadb;SslMode=None;";
-            string query = "SELECT HallId FROM Halls WHERE HallName = @HallName;";
-
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@HallName", hallName);
-
-                connection.Open();
-                var result = command.ExecuteScalar();
-
-                if (result != null && result != DBNull.Value)
-                {
-                    hallId = Convert.ToInt32(result);
-                }
-            }
-
-            return hallId;
-        }
 
     }
 }
