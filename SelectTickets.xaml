@@ -165,16 +165,16 @@
 
 
                     <WrapPanel Grid.Row="0" >
-                        <TextBlock TextWrapping="Wrap" Text="{Binding Title}" Foreground="White" FontSize="20" Name="MovieNameTicket"/>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding Title}" Foreground="White" FontSize="20" Name="MovieNameTicket" Margin="10,0,0,0"/>
                     </WrapPanel>
 
-                    <TextBlock Grid.Row="1" Foreground="White" FontSize="15" Name="ScheduleDateTime">
+                    <TextBlock Grid.Row="1" Foreground="White" FontSize="15" Name="ScheduleDateTime" Margin="10,0,0,0">
                         <Run Text="{Binding ScreeningTime}"/>
                         <Run Text=" | "/>
                         <Run Text="{Binding ScreeningDate}"/>
                     </TextBlock>
                     
-                    <TextBlock Text="{Binding HallName}" Grid.Row="2" Foreground="White" FontSize="15" Name="HallNameTicket"/>
+                    <TextBlock Text="{Binding HallName}" Grid.Row="2" Foreground="White" FontSize="15" Name="HallNameTicket" Margin="10,0,0,0"/>
 
 
                 </Grid>
@@ -236,10 +236,10 @@
                     <Border Grid.Row="5" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="Orange"/>
 
 
-                    <TextBlock x:Name="RegularTicketPriceBox" Grid.Row="2" Grid.Column="1" Foreground="White" Text="{Binding basePrice}" FontSize="20" FontWeight="Regular" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="15"/>
-                    <TextBlock x:Name="KidsTicketPriceBox" Grid.Row="3" Grid.Column="1" Foreground="White" Text="{Binding basePrice}" FontSize="20" FontWeight="Regular" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="15"/>
-                    <TextBlock x:Name="AdultTicketPriceBox" Grid.Row="4" Grid.Column="1" Foreground="White" Text="{Binding basePrice}" FontSize="20" FontWeight="Regular" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="15"/>
-                    <TextBlock x:Name="StudentTicketPriceBox" Grid.Row="5" Grid.Column="1" Foreground="White" Text="{Binding basePrice}" FontSize="20" FontWeight="Regular" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="15"/>
+                    <TextBlock x:Name="RegularTicketPriceBox" Grid.Row="2" Grid.Column="1" Foreground="White" FontSize="20" FontWeight="Regular" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="15"/>
+                    <TextBlock x:Name="KidsTicketPriceBox" Grid.Row="3" Grid.Column="1" Foreground="White" FontSize="20" FontWeight="Regular" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="15"/>
+                    <TextBlock x:Name="AdultTicketPriceBox" Grid.Row="4" Grid.Column="1" Foreground="White" FontSize="20" FontWeight="Regular" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="15"/>
+                    <TextBlock x:Name="StudentTicketPriceBox" Grid.Row="5" Grid.Column="1" Foreground="White" FontSize="20" FontWeight="Regular" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="15"/>
 
 
                     <Grid Grid.Column="2" Grid.Row="2">

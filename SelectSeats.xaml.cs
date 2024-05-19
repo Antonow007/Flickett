@@ -46,7 +46,9 @@ namespace Flickett
             
            
             (int hallId, int screeningId) = GetScheduleDetails(movie.MovieId, screeningTime); 
-            this.screeningId = screeningId; 
+            this.screeningId = screeningId;
+
+            TakenSeats();
         }
 
 
@@ -189,7 +191,7 @@ namespace Flickett
                         }
                     }
 
-                    MessageBox.Show($"{realSeatRow} ; {buttonText}");
+                   
                     selectedSeatsCount++;
                 }
             }
@@ -198,6 +200,50 @@ namespace Flickett
                 MessageBox.Show("You have already selected the maximum number of seats.");
             }
         }
+
+        private void TakenSeats()
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string query = "Select SeatNumber, RowNumber from tickets where ScreeningId=@ScreeningId";
+
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@ScreeningId", screeningId);
+
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int seatNumber = reader.GetInt32("SeatNumber");
+                            int rowNumber = reader.GetInt32("RowNumber");
+
+                            // Намиране на бутона, представляващ седалката по нейните координати в Grid
+                            Button takenSeatButton = SeatsLayout.Children
+                                .OfType<Button>()
+                                .FirstOrDefault(btn =>
+                                    Grid.GetRow(btn) == rowNumber &&
+                                    Grid.GetColumn(btn) == seatNumber);
+
+                            // Оцветяване в червено и забрана за кликване
+                            if (takenSeatButton != null)
+                            {
+                                takenSeatButton.Background = Brushes.Red;
+                                takenSeatButton.IsEnabled = false;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error marking taken seats: {ex.Message}");
+            }
+        }
+
 
 
         private void MoveSliderMenuToRight()

@@ -44,6 +44,13 @@ namespace Flickett
             movie.basePrice = basePrice;
             movie.HallName = hallName;
 
+            RegularTicketPriceBox.Text=basePrice.ToString("F2");
+            KidsTicketPriceBox.Text = (basePrice - 5).ToString("F2");
+            AdultTicketPriceBox.Text = (basePrice - 2).ToString("F2");
+            StudentTicketPriceBox.Text = (basePrice - 4).ToString("F2");
+
+
+
         }
 
 
@@ -157,7 +164,7 @@ namespace Flickett
 
 
 
-
+        
 
 
 
